@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salah Mekkawey - AI Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* الألوان والتصميم العالمي */
         :root { 
@@ -53,9 +54,8 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* شبكة الكروت جوه كل مجموعة */
+        /* شبكة الكروت */
         .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        
         .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
         .card h3 { margin: 10px 0; color: #333; font-size: 20px; }
@@ -63,7 +63,37 @@
         .btn { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 12px; font-weight: bold; transition: 0.3s; }
         .btn:hover { background: var(--primary); }
 
-        .footer { text-align: center; margin-top: 50px; color: #888; font-size: 14px; padding: 20px; border-top: 1px solid #ddd; }
+        /* تصميم الفوتر وأيقونات السوشيال ميديا */
+        .footer { text-align: center; margin-top: 50px; padding: 30px 20px; background: white; border-top: 1px solid #ddd; }
+        .footer p { color: #555; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .social-icons a {
+            display: flex; align-items: center; justify-content: center;
+            width: 45px; height: 45px; border-radius: 50%;
+            background: var(--bg); color: var(--primary); font-size: 22px;
+            text-decoration: none; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .social-icons a:hover { transform: translateY(-5px); background: var(--accent); color: white; }
+        
+        /* تلميحات تظهر لما تقف على الزرار */
+        .social-icons a::after {
+            content: attr(title);
+            position: absolute;
+            bottom: -30px;
+            font-size: 11px;
+            background: var(--primary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .social-icons a:hover::after { opacity: 1; bottom: -25px; }
+        
+        .copyright { color: #888; font-size: 13px; font-weight: normal; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -71,135 +101,4 @@
 <div class="header">
     <div class="logo-box">S</div>
     <h1 class="brand-name">Salah Mekkawey</h1>
-    <p class="sub-text">الموسوعة الشاملة لأدوات الذكاء الاصطناعي العالمية</p>
-</div>
-
-<div class="search-container">
-    <input type="text" id="mainSearch" class="search-bar" placeholder="ابحث عن أداة (مثال: تصميم، فيديو، كتابة)...">
-</div>
-
-<div class="main-container" id="contentDisplay">
-    </div>
-
-<div class="footer">
-    © 2026 Salah Mekkawey | All Rights Reserved
-</div>
-
-<script>
-    // الـ 50 أداة متقسمين وجاهزين
-    const allTools = [
-        // قسم النصوص
-        { name: "ChatGPT", cat: "أدوات النصوص والبرمجة", desc: "أشهر مساعد ذكي لكتابة المحتوى والبرمجة.", link: "https://chat.openai.com" },
-        { name: "Claude", cat: "أدوات النصوص والبرمجة", desc: "ممتاز في تحليل الملفات الطويلة وكتابة الأكواد.", link: "https://claude.ai" },
-        { name: "Google Gemini", cat: "أدوات النصوص والبرمجة", desc: "ذكاء جوجل المتطور والمحدث دائماً.", link: "https://gemini.google.com" },
-        { name: "Perplexity", cat: "أدوات النصوص والبرمجة", desc: "محرك بحث ذكي بيعطيك إجابات مع المصادر.", link: "https://perplexity.ai" },
-        { name: "Poe", cat: "أدوات النصوص والبرمجة", desc: "منصة بتجمع كل روبوتات المحادثة في مكان واحد.", link: "https://poe.com" },
-        { name: "Jasper", cat: "أدوات النصوص والبرمجة", desc: "مساعد كتابة قوي جداً للمسوقين وصناع المحتوى.", link: "https://jasper.ai" },
-        { name: "Grammarly", cat: "أدوات النصوص والبرمجة", desc: "تصحيح لغوي احترافي بالذكاء الاصطناعي.", link: "https://grammarly.com" },
-        { name: "Quillbot", cat: "أدوات النصوص والبرمجة", desc: "إعادة صياغة الجمل والفقرات باحترافية.", link: "https://quillbot.com" },
-        { name: "ChatPDF", cat: "أدوات النصوص والبرمجة", desc: "ارفع أي ملف PDF واسأله عن محتواه.", link: "https://chatpdf.com" },
-        { name: "Copy.ai", cat: "أدوات النصوص والبرمجة", desc: "كتابة إعلانات وبوستات سوشيال ميديا بسرعة.", link: "https://copy.ai" },
-
-        // قسم الصور
-        { name: "Leonardo AI", cat: "أدوات الصور والرسم", desc: "تصميم شخصيات وصور احترافية بضغطة زر.", link: "https://leonardo.ai" },
-        { name: "Midjourney", cat: "أدوات الصور والرسم", desc: "الأقوى عالمياً في جودة الصور الفنية والسينمائية.", link: "https://midjourney.com" },
-        { name: "Adobe Firefly", cat: "أدوات الصور والرسم", desc: "توليد وتعديل الصور بذكاء من أدوبي.", link: "https://firefly.adobe.com" },
-        { name: "Ideogram", cat: "أدوات الصور والرسم", desc: "الأفضل في كتابة نصوص صحيحة داخل الصور.", link: "https://ideogram.ai" },
-        { name: "Remove.bg", cat: "أدوات الصور والرسم", desc: "مسح خلفية أي صورة بدقة في ثانية واحدة.", link: "https://remove.bg" },
-        { name: "Upscayl", cat: "أدوات الصور والرسم", desc: "تكبير حجم الصور الضعيفة وزيادة جودتها.", link: "https://upscayl.org" },
-        { name: "Lexica", cat: "أدوات الصور والرسم", desc: "محرك بحث لصور الذكاء الاصطناعي للحصول على إلهام.", link: "https://lexica.art" },
-        { name: "Krea AI", cat: "أدوات الصور والرسم", desc: "توليد الصور في الوقت الفعلي أثناء الرسم.", link: "https://krea.ai" },
-        { name: "Playground AI", cat: "أدوات الصور والرسم", desc: "منصة سهلة لتوليد وتعديل الصور مجاناً.", link: "https://playground.com" },
-        { name: "Photoroom", cat: "أدوات الصور والرسم", desc: "تصوير المنتجات وتغيير خلفياتها باحترافية.", link: "https://photoroom.com" },
-
-        // قسم الفيديو
-        { name: "Luma Dream", cat: "أدوات الفيديو والأنميشن", desc: "تحويل الصور لفيديوهات سينمائية متحركة.", link: "https://lumalabs.ai" },
-        { name: "Runway Gen-2", cat: "أدوات الفيديو والأنميشن", desc: "تحويل النصوص والصور إلى فيديو احترافي.", link: "https://runwayml.com" },
-        { name: "Pika Labs", cat: "أدوات الفيديو والأنميشن", desc: "تحريك أجزاء معينة من الصورة بدقة عالية.", link: "https://pika.art" },
-        { name: "HeyGen", cat: "أدوات الفيديو والأنميشن", desc: "إنشاء فيديوهات بمتحدث واقعي من نص مكتوب.", link: "https://heygen.com" },
-        { name: "D-ID", cat: "أدوات الفيديو والأنميشن", desc: "جعل الصور الثابتة تتحدث وتتحرك.", link: "https://d-id.com" },
-        { name: "CapCut AI", cat: "أدوات الفيديو والأنميشن", desc: "أدوات ذكية للمونتاج وكتابة الترجمة تلقائياً.", link: "https://capcut.com" },
-        { name: "InVideo", cat: "أدوات الفيديو والأنميشن", desc: "تحويل المقالات والأفكار لفيديوهات جاهزة للنشر.", link: "https://invideo.io" },
-        { name: "Synthesia", cat: "أدوات الفيديو والأنميشن", desc: "فيديوهات تقديمية بممثلين بالذكاء الاصطناعي.", link: "https://synthesia.io" },
-        { name: "Kaiber", cat: "أدوات الفيديو والأنميشن", desc: "صناعة فيديوهات أنميشن موسيقية إبداعية.", link: "https://kaiber.ai" },
-        { name: "Veed.io", cat: "أدوات الفيديو والأنميشن", desc: "محرر فيديو سحابي يضم أدوات ذكاء اصطناعي قوية.", link: "https://veed.io" },
-
-        // قسم الصوت
-        { name: "ElevenLabs", cat: "أدوات الصوت والموسيقى", desc: "أفضل أداة لتحويل النص لصوت بشري واقعي.", link: "https://elevenlabs.io" },
-        { name: "Suno AI", cat: "أدوات الصوت والموسيقى", desc: "تأليف أغاني كاملة بالألحان والكلمات.", link: "https://suno.com" },
-        { name: "Udio", cat: "أدوات الصوت والموسيقى", desc: "منصة قوية جداً لإنتاج الموسيقى بالذكاء الاصطناعي.", link: "https://udio.com" },
-        { name: "Lalal.ai", cat: "أدوات الصوت والموسيقى", desc: "فصل الصوت البشري عن الموسيقى بدقة.", link: "https://lalal.ai" },
-        { name: "Murf AI", cat: "أدوات الصوت والموسيقى", desc: "تعليق صوتي احترافي للفيديوهات والكتب.", link: "https://murf.ai" },
-        { name: "Voice.ai", cat: "أدوات الصوت والموسيقى", desc: "تغيير صوتك لأصوات مشاهير وشخصيات مختلفة.", link: "https://voice.ai" },
-        { name: "Soundraw", cat: "أدوات الصوت والموسيقى", desc: "تأليف موسيقى خلفية للفيديوهات بدون حقوق.", link: "https://soundraw.io" },
-        { name: "Otter.ai", cat: "أدوات الصوت والموسيقى", desc: "تسجيل الاجتماعات وتحويل الصوت إلى نص.", link: "https://otter.ai" },
-        { name: "Descript", cat: "أدوات الصوت والموسيقى", desc: "تعديل الصوت والفيديو عن طريق تعديل النص.", link: "https://descript.com" },
-        { name: "Adobe Podcast", cat: "أدوات الصوت والموسيقى", desc: "تنقية الصوت العادي لجعله كأنه مسجل في استوديو.", link: "https://podcast.adobe.com" },
-
-        // قسم الـ 3D والتصميم
-        { name: "Macaron AI", cat: "أدوات 3D والتصميم", desc: "تحويل الصور لنماذج 3D لاستخدامها في الألعاب.", link: "https://macaron.app" },
-        { name: "Meshy", cat: "أدوات 3D والتصميم", desc: "توليد نماذج ثلاثية الأبعاد من النصوص.", link: "https://meshy.ai" },
-        { name: "Spline", cat: "أدوات 3D والتصميم", desc: "تصميم مجسمات 3D تفاعلية مباشرة على المتصفح.", link: "https://spline.design" },
-        { name: "Skybox Lab", cat: "أدوات 3D والتصميم", desc: "توليد بيئات وعوالم 360 درجة بضغطة زر.", link: "https://blockadelabs.com" },
-        { name: "Canva Magic", cat: "أدوات 3D والتصميم", desc: "أدوات الذكاء الاصطناعي من كانفا للتصميم الشامل.", link: "https://canva.com" },
-        { name: "Looka", cat: "أدوات 3D والتصميم", desc: "تصميم لوجو (شعار) احترافي لمشروعك.", link: "https://looka.com" },
-        { name: "Brandmark", cat: "أدوات 3D والتصميم", desc: "بناء هوية بصرية كاملة للشركات.", link: "https://brandmark.io" },
-        { name: "Gamma", cat: "أدوات 3D والتصميم", desc: "إنشاء عروض تقديمية (PowerPoint) ذكية في ثواني.", link: "https://gamma.app" },
-        { name: "Tome", cat: "أدوات 3D والتصميم", desc: "بناء قصص وعروض تفاعلية باستخدام الذكاء الاصطناعي.", link: "https://tome.app" },
-        { name: "Beautiful.ai", cat: "أدوات 3D والتصميم", desc: "تصميم شرائح عرض احترافية أوتوماتيكياً.", link: "https://beautiful.ai" }
-    ];
-
-    const contentDisplay = document.getElementById('contentDisplay');
-    const searchInput = document.getElementById('mainSearch');
-
-    // أسماء المجموعات
-    const categories = [
-        "أدوات النصوص والبرمجة", 
-        "أدوات الصور والرسم", 
-        "أدوات الفيديو والأنميشن", 
-        "أدوات الصوت والموسيقى", 
-        "أدوات 3D والتصميم"
-    ];
-
-    function renderTools(filterText = "") {
-        contentDisplay.innerHTML = ""; // تنظيف الشاشة
-
-        categories.forEach(category => {
-            // فلترة الأدوات اللي في المجموعة دي وبطابق البحث
-            const filteredTools = allTools.filter(tool => 
-                tool.cat === category && 
-                (tool.name.toLowerCase().includes(filterText) || tool.desc.includes(filterText))
-            );
-
-            // لو في أدوات في المجموعة دي، اعرض العنوان والكروت
-            if (filteredTools.length > 0) {
-                // إضافة عنوان المجموعة
-                contentDisplay.innerHTML += `<div class="category-title">${category}</div>`;
-                
-                // إنشاء شبكة الكروت للمجموعة دي
-                let gridHTML = `<div class="tools-grid">`;
-                filteredTools.forEach(tool => {
-                    gridHTML += `
-                        <div class="card">
-                            <h3>${tool.name}</h3>
-                            <p>${tool.desc}</p>
-                            <a href="${tool.link}" target="_blank" class="btn">اذهب للموقع</a>
-                        </div>
-                    `;
-                });
-                gridHTML += `</div>`;
-                
-                contentDisplay.innerHTML += gridHTML;
-            }
-        });
-    }
-
-    // تشغيل البحث
-    searchInput.addEventListener('input', (e) => renderTools(e.target.value.toLowerCase()));
-    
-    // التشغيل الأول للموقع
-    renderTools(); 
-</script>
-
-</body>
-</html>
+    <p class="sub-text">
