@@ -1,10 +1,10 @@
-const cacheName = 'salah-hub-v4'; // تغيير الرقم هنا بيجبر الكروم يحدث
+const cacheName = 'salah-hub-v5';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
-      return cache.addAll(['./', './index.html']);
+      return cache.addAll(['./', './index.html', './manifest.json']);
     })
   );
 });
@@ -24,8 +24,6 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    caches.match(e.request).then((res) => {
-      return res || fetch(e.request);
-    })
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
