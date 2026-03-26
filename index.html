@@ -3,187 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salah Mekkawey - Global Hub</title>
+    <title>Salah Mekkawey - Ultimate Hub</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#7c3aed">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0b0f1a; --card-bg: rgba(20, 26, 42, 0.8); --nav-bg: rgba(0,0,0,0.4);
+            --bg: #0b0f1a; --card-bg: rgba(20, 26, 42, 0.9); --nav-bg: rgba(0,0,0,0.4);
             --accent: #7c3aed; --neon: #00f2ff; --text: #e2e8f0; --soccer: #10b981; --red: #f43f5e;
             --yt: #ff0000; --fb: #1877f2; --tk: #ffffff;
         }
         body.light-mode {
-            --bg: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.9); --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.95); --nav-bg: rgba(255, 255, 255, 0.8);
             --text: #0f172a; --accent: #6d28d9; --neon: #7c3aed;
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; transition: 0.3s; overflow-x: hidden; }
-        .header { text-align: center; padding: 25px 20px; position: relative; }
+        
+        .header { text-align: center; padding: 20px; position: relative; }
         .top-controls { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 1001; }
-        [dir="ltr"] .top-controls { left: auto; right: 20px; }
-        .lang-switcher, .theme-toggle { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); color: var(--text); padding: 10px; border-radius: 12px; cursor: pointer; backdrop-filter: blur(10px); }
-        .main-logo { width: 80px; height: 80px; margin: 0 auto 10px; filter: drop-shadow(0 0 15px var(--neon)); animation: float 3s infinite; }
+        .theme-toggle { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); color: var(--text); padding: 10px; border-radius: 50%; cursor: pointer; width: 40px; height: 40px; }
+
+        .status-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 10px; }
+        #digitalClock { font-size: 35px; font-weight: bold; color: var(--neon); text-shadow: 0 0 10px var(--accent); }
+        .weather-box { background: var(--card-bg); padding: 8px 15px; border-radius: 50px; border: 1px solid var(--neon); display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .weather-box select { background: none; border: none; color: var(--text); cursor: pointer; outline: none; font-weight: bold; }
+
+        .wisdom-strip { max-width: 600px; margin: 0 auto 15px; background: rgba(124, 58, 237, 0.1); padding: 10px; border-radius: 50px; border: 1px dashed var(--accent); font-size: 13px; font-style: italic; text-align: center; }
+
+        .main-logo { width: 65px; height: 65px; margin-bottom: 5px; filter: drop-shadow(0 0 15px var(--neon)); animation: float 3s infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .install-btn { background: linear-gradient(45deg, #7c3aed, #00f2ff); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); transition: 0.3s; }
-        .nav-container { display: flex; gap: 10px; overflow-x: auto; padding: 15px; background: var(--nav-bg); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-container::-webkit-scrollbar { display: none; }
-        .nav-btn { background: var(--card-bg); padding: 12px 20px; border-radius: 15px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 8px; font-weight: 600; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .nav-btn.active { background: var(--accent); color: white; border-color: var(--neon); }
-        .nav-counter { background: var(--red); color: white; font-size: 10px; padding: 2px 7px; border-radius: 50px; font-weight: bold; }
-        .controls { max-width: 800px; margin: 20px auto; padding: 0 20px; }
-        .search-bar { width: 100%; padding: 14px; border-radius: 50px; background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); color: var(--text); outline: none; text-align: center; box-sizing: border-box; }
-        .main-grid { display: grid; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; min-height: 400px; }
-        .grid-view { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-        .card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; animation: fadeIn 0.5s ease; backdrop-filter: blur(5px); }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card h3 { margin: 0 0 8px; color: var(--neon); font-size: 19px; }
-        .card p { font-size: 13px; color: #94a3b8; height: 40px; overflow: hidden; line-height: 1.5; }
-        .btn { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 15px; cursor: pointer; border: none; width: 100%; font-size: 16px; }
-        .footer { text-align: center; padding: 50px 20px; opacity: 0.7; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); font-weight: bold; }
-        /* Social Colors */
-        .card.youtube { border-top: 4px solid var(--yt); }
-        .card.facebook { border-top: 4px solid var(--fb); }
-        .card.tiktok { border-top: 4px solid var(--tk); }
+
+        .action-btns { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn-top { border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
+        .install-btn { background: linear-gradient(45deg, #7c3aed, #00f2ff); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
+        .share-btn { background: linear-gradient(45deg, #25d366, #128c7e); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+
+        /* منطقة الفيديوهات والعداد */
+        .promo-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 0 20px; max-width: 1100px; margin: 0 auto 25px; }
+        .promo-card { background: var(--card-bg); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .promo-card h4 { margin: 0 0 10px; font-size: 12px; color: var(--neon); text-transform: uppercase; }
+        .video-box { border-radius: 12px; overflow: hidden; height: 160px; background: #000; }
+        .countdown { display: flex; justify-content: center; gap: 8px; font-weight: bold; font-size: 20px; color: var(--red); margin-top: 10px; }
+
+        /* الأقسام */
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; padding: 20px; max-width: 900px; margin: 0 auto; }
+        .folder-card { background: var(--card-bg); border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
+        .folder-card:hover { transform: translateY(-5px); border-color: var(--neon); }
+        .folder-card i { font-size: 35px; color: var(--neon); margin-bottom: 12px; display: block; }
+        .folder-card span { font-weight: bold; font-size: 15px; }
+
+        /* عرض الأدوات */
+        #toolsView { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .back-nav { color: var(--neon); cursor: pointer; font-weight: bold; margin-bottom: 25px; display: inline-block; font-size: 18px; }
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .item-card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .item-card h3 { color: var(--neon); margin: 0 0 10px; font-size: 19px; }
+        .item-card p { font-size: 13px; color: #94a3b8; height: 40px; overflow: hidden; margin-bottom: 15px; }
+        .btn-action { background: var(--accent); color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 16px; }
+        .copy-tag { position: absolute; top: 15px; left: 15px; background: var(--soccer); color: white; padding: 4px 8px; border-radius: 6px; font-size: 10px; cursor: pointer; }
+
+        .footer { text-align: center; padding: 50px 20px; opacity: 0.6; font-size: 13px; font-weight: bold; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body id="body">
 
 <div class="header">
     <div class="top-controls">
-        <select class="lang-switcher" id="langSelect" onchange="changeLang(this.value)">
-            <option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option>
-        </select>
         <div class="theme-toggle" onclick="toggleTheme()"><i id="themeIcon" class="fas fa-moon"></i></div>
     </div>
-    <svg class="main-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#7c3aed" /><stop offset="100%" style="stop-color:#00f2ff" /></linearGradient></defs>
-        <circle cx="50" cy="50" r="45" stroke="url(#g1)" stroke-width="5" fill="none" /><path d="M35 50 L45 60 L65 40" stroke="#00f2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    
+    <div class="status-bar">
+        <div id="digitalClock">00:00:00</div>
+        <div class="weather-box">
+            <i class="fas fa-temperature-high"></i>
+            <select id="weatherSelect">
+                <option>المنيا 24°C</option><option>القاهرة 27°C</option><option>الإسكندرية 21°C</option><option>أسوان 32°C</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="wisdom-strip" id="wisdom">"الأمل هو المحرك الذي يجعلنا نبدع في عالم الأنميشن."</div>
+
+    <svg class="main-logo" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--accent)" stroke-width="4" fill="none" />
+        <path d="M35 50 L45 60 L65 40" stroke="var(--neon)" stroke-width="8" stroke-linecap="round" fill="none" />
     </svg>
     <h1 style="margin:0;">Salah Mekkawey</h1>
-    <button class="install-btn" id="installBtn"><i class="fas fa-mobile-alt"></i> Install App</button>
+
+    <div class="action-btns">
+        <button class="btn-top install-btn" id="installBtn"><i class="fas fa-download"></i> Install App</button>
+        <button class="btn-top share-btn" onclick="shareSite()"><i class="fas fa-share-alt"></i> Share Site</button>
+    </div>
 </div>
 
-<div class="nav-container" id="navContainer"></div>
+<div id="homeUI">
+    <div class="promo-area">
+        <div class="promo-card">
+            <h4><i class="fab fa-youtube"></i> YouTube Latest</h4>
+            <div class="video-box">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="promo-card">
+            <h4><i class="fab fa-tiktok"></i> TikTok Feed</h4>
+            <div class="video-box">
+                <iframe width="100%" height="100%" src="https://www.tiktok.com/player/v1/7345678901234567890" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="promo-card">
+            <h4><i class="fas fa-stopwatch"></i> Match Timer</h4>
+            <div class="countdown" id="timer">00 : 00 : 00</div>
+            <p style="font-size: 11px; margin-top: 10px; opacity: 0.7; color: var(--red);">الأهلي vs الزمالك - القمة تقترب!</p>
+        </div>
+    </div>
 
-<div class="controls">
-    <input type="text" id="search" class="search-bar" placeholder="...">
+    <div class="categories-grid">
+        <div class="folder-card" onclick="openCat('social')"><i class="fas fa-share-alt"></i><span>قنواتي</span></div>
+        <div class="folder-card" onclick="openCat('ai')"><i class="fas fa-robot"></i><span>ذكاء اصطناعي</span></div>
+        <div class="folder-card" onclick="openCat('prompts')"><i class="fas fa-magic"></i><span>الأوامر</span></div>
+        <div class="folder-card" onclick="openCat('sports')"><i class="fas fa-futbol"></i><span>الرياضة</span></div>
+        <div class="folder-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>الأخبار</span></div>
+        <div class="folder-card" onclick="openCat('soft')"><i class="fas fa-desktop"></i><span>البرامج</span></div>
+    </div>
 </div>
 
-<div class="main-grid grid-view" id="mainGrid"></div>
+<div id="toolsView">
+    <div class="back-nav" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</div>
+    <h2 id="viewTitle" style="text-align: center; color: var(--neon); margin-bottom: 25px;"></h2>
+    <div class="items-grid" id="itemsGrid"></div>
+</div>
 
-<div class="footer"><p id="ui-footer">© 2026 Salah Mekkawey | All Rights Reserved</p></div>
+<div class="footer">© 2026 Salah Mekkawey | The Ultimate Animation & Tech Hub</div>
 
 <script>
     if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
 
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        const btn = document.getElementById('installBtn');
-        btn.style.background = "linear-gradient(45deg, #00f2ea, #7c3aed)";
-    });
+    function updateClock() {
+        document.getElementById('digitalClock').innerText = new Date().toLocaleTimeString('ar-EG');
+    }
+    setInterval(updateClock, 1000); updateClock();
 
-    document.getElementById('installBtn').onclick = async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            deferredPrompt = null;
-        } else {
-            alert('للتحميل: اضغط على الـ 3 نقط في المتصفح واختار "Install app" أو "Add to Home Screen"');
-        }
-    };
+    function setWisdom() {
+        const w = ["النجاح يبدأ بخطوة، والأنميشن يبدأ بفكرة.", "بندق ولوزة: الصبر يحقق المستحيل.", "كن فخوراً بمكانك، المنيا بلد المبدعين.", "الذكاء الاصطناعي صديق المبدع الذكي."];
+        document.getElementById('wisdom').innerText = `"${w[Math.floor(Math.random()*w.length)]}"`;
+    }
+    setWisdom();
 
-    const uiStrings = {
-        ar: { search: "ابحث عن أداة، ماتش، أو قناة...", social: "قنواتي", ai: "ذكاء اصطناعي", sports: "رياضة مباشر", news: "أخبار اليوم", games: "ألعاب", soft: "برامج", enter: "دخول الآن" },
-        en: { search: "Search tool, match, or channel...", social: "Socials", ai: "AI Tools", sports: "Sports", news: "News", games: "Games", soft: "Software", enter: "Access" },
-        fr: { search: "Chercher outil, match...", social: "Sociaux", ai: "Outils IA", sports: "Sports", news: "Actus", games: "Jeux", soft: "Logiciels", enter: "Entrer" }
-    };
+    const data = [
+        { cat:'social', name:'YouTube', desc:'قناتي للأنميشن والرياضة.', link:'https://youtube.com/@SalahMekkawey' },
+        { cat:'social', name:'Facebook', desc:'أحدث المنشورات اليومية.', link:'#' },
+        { cat:'social', name:'TikTok', desc:'فيديوهات قصيرة وحصرية.', link:'#' },
 
-    const items = [
-        // القنوات الرسمية
-        { cat:'social', class:'youtube', name:'YouTube Channel', desc:{ar:'قناتي الرسمية للأنميشن والرياضة.', en:'Official animation & sports channel.', fr:'Chaîne officielle.'}, link:'https://youtube.com/@SalahMekkawey' },
-        { cat:'social', class:'facebook', name:'Facebook Page', desc:{ar:'تابع أهم المنشورات اليومية والتريند.', en:'Latest updates on Facebook.', fr:'Actus sur Facebook.'}, link:'https://facebook.com/' },
-        { cat:'social', class:'tiktok', name:'TikTok Profile', desc:{ar:'أقوى الفيديوهات القصيرة والحصرية.', en:'Short viral videos.', fr:'Vidéos virales.'}, link:'https://tiktok.com/' },
+        { cat:'sports', name:'Yacine TV', desc:'البث المباشر للمباريات.', link:'https://yacineapp.tv/' },
+        { cat:'sports', name:'Kora Live', desc:'تغطية حية للمباريات.', link:'https://koora-live.me/' },
+        { cat:'sports', name:'Yalla Kora', desc:'نتائج ومواعيد دقيقة.', link:'https://www.yallakora.com/' },
+        { cat:'sports', name:'365Scores', desc:'تنبيهات أهداف فورية.', link:'https://www.365scores.com' },
+        { cat:'sports', name:'FilGoal', desc:'أخبار الكورة المصرية.', link:'https://www.filgoal.com' },
 
-        // رياضة
-        { cat:'sports', name:'Yacine TV', desc:{ar:'بث مباشر للمباريات والقنوات الرياضية.', en:'Live sports streaming.', fr:'Sports live.'}, link:'https://yacineapp.tv/' },
-        { cat:'sports', name:'Kora Live', desc:{ar:'تغطية حية لكل مباريات الدوريات.', en:'Live match coverage.', fr:'Direct.'}, link:'https://koora-live.me/' },
-        { cat:'sports', name:'Yalla Kora', desc:{ar:'نتائج ومواعيد دقيقة وترتيب البطولات.', en:'Accurate scores.', fr:'Résultats.'}, link:'https://www.yallakora.com/' },
-        { cat:'sports', name:'365Scores', desc:{ar:'تنبيهات أهداف فورية ونتائج حية.', en:'Live goals alerts.', fr:'Alertes buts.'}, link:'https://www.365scores.com' },
-        { cat:'sports', name:'FilGoal', desc:{ar:'أخبار الكورة المصرية والعالمية.', en:'Egyptian football news.', fr:'Infos foot.'}, link:'https://www.filgoal.com' },
+        { cat:'news', name:'Sky News', desc:'أخبار العالم والسياسة.', link:'https://www.skynewsarabia.com' },
+        { cat:'news', name:'اليوم السابع', desc:'أخبار مصر والتريند.', link:'https://www.youm7.com' },
+        { cat:'news', name:'CNBC', desc:'تحليلات المال والبورصة.', link:'https://www.cnbcarabia.com' },
+        { cat:'news', name:'مصراوي', desc:'أخبار اجتماعية وفنية.', link:'https://www.masrawy.com' },
 
-        // أخبار
-        { cat:'news', name:'Sky News', desc:{ar:'أخبار العالم والسياسة والاقتصاد.', en:'World news.', fr:'Infos monde.'}, link:'https://www.skynewsarabia.com' },
-        { cat:'news', name:'اليوم السابع', desc:{ar:'أخبار مصر والتريند والرياضة.', en:'Egypt news.', fr:'Infos Égypte.'}, link:'https://www.youm7.com' },
-        { cat:'news', name:'CNBC العربية', desc:{ar:'تحليلات البورصة والمال والأعمال.', en:'Finance news.', fr:'Économie.'}, link:'https://www.cnbcarabia.com' },
-        { cat:'news', name:'مصراوي', desc:{ar:'منوعات وأخبار اجتماعية وفنية.', en:'Egyptian social news.', fr:'Infos.'}, link:'https://www.masrawy.com' },
+        { cat:'ai', name:'ChatGPT', desc:'مساعد نصوص وبرمجة.', link:'https://chat.openai.com' },
+        { cat:'ai', name:'Leonardo AI', desc:'تصميم صور كرتونية.', link:'https://leonardo.ai' },
+        { cat:'ai', name:'ElevenLabs', desc:'تعليق صوتي واقعي.', link:'https://elevenlabs.io' },
 
-        // ألعاب
-        { cat:'games', name:'Akinator', desc:{ar:'المارد السحري الشهير.', en:'The Web Genius.', fr:'Le Génie.'}, link:'https://ar.akinator.com' },
-        { cat:'games', name:'Quick Draw', desc:{ar:'تحدى الذكاء الاصطناعي في الرسم.', en:'Draw & AI guess.', fr:'Dessinez.'}, link:'https://quickdraw.withgoogle.com' },
-        { cat:'games', name:'Infinite Craft', desc:{ar:'دمج العناصر الممتع والذكي.', en:'Element merging.', fr:'Fusion.'}, link:'https://neal.fun/infinite-craft/' },
-        { cat:'games', name:'AI Dungeon', desc:{ar:'عالم قصص خيالية تكتبها بنفسك.', en:'AI stories.', fr:'Histoires.'}, link:'https://aidungeon.com' },
-
-        // برامج
-        { cat:'soft', name:'Photopea', desc:{ar:'بديل فوتوشوب أونلاين مجاني.', en:'Free Photoshop.', fr:'Photoshop.'}, link:'https://www.photopea.com/' },
-        { cat:'soft', name:'CapCut PC', desc:{ar:'أفضل برنامج مونتاج فيديو للكمبيوتر.', en:'Best video editor.', fr:'Éditeur.'}, link:'https://www.capcut.com/desktop/' },
-        { cat:'soft', name:'OBS Studio', desc:{ar:'تصوير شاشة وبث مباشر احترافي.', en:'Screen recording.', fr:'Capture.'}, link:'https://obsproject.com/' },
-
-        // ذكاء اصطناعي (أهم الأدوات)
-        { cat:'ai', name:'ChatGPT', desc:{ar:'مساعد نصوص وبرمجة وتأليف.', en:'AI Writing/Coding.', fr:'IA Texte.'}, link:'https://chat.openai.com' },
-        { cat:'ai', name:'Leonardo AI', desc:{ar:'تصميم صور كرتون احترافية.', en:'Image design.', fr:'Images IA.'}, link:'https://leonardo.ai' },
-        { cat:'ai', name:'ElevenLabs', desc:{ar:'أفضل تعليق صوتي واقعي.', en:'AI Voice.', fr:'Voix IA.'}, link:'https://elevenlabs.io' }
+        { cat:'prompts', name:'Pixar Avatar', copy:'3D Pixar style character, young man, glowing eyes, cinematic lighting, 8k.', desc:'لعمل صورة شخصية كرتونية.' },
+        { cat:'prompts', name:'Majestic Cat', copy:'Highly detailed portrait of a cat king, royal crown, purple background, 8k.', desc:'لعمل صور قطط ملكية.' }
     ];
 
-    // تكملة الـ 50 أداة
-    for(let i=1; i<=47; i++) {
-        items.push({ cat:'ai', name:'AI Smart Tool '+i, desc:{ar:'أداة ذكاء اصطناعي متطورة رقم '+i, en:'AI tool '+i, fr:'Outil IA '+i}, link:'#' });
+    for(let i=1; i<=48; i++) { data.push({ cat:'ai', name:'AI Tool '+i, desc:'أداة ذكاء اصطناعي إضافية رقم '+i, link:'#' }); }
+
+    function openCat(c) {
+        document.getElementById('homeUI').style.display = 'none';
+        const grid = document.getElementById('itemsGrid');
+        grid.innerHTML = data.filter(i => i.cat === c).map(i => `
+            <div class="item-card">
+                ${i.copy ? `<span class="copy-tag" onclick="copyP('${i.copy}')">نسخ الأمر</span>` : ''}
+                <h3>${i.name}</h3>
+                <p>${i.desc}</p>
+                ${i.link ? `<button class="btn-action" onclick="window.open('${i.link}', '_blank')">دخول الآن</button>` : ''}
+            </div>
+        `).join('');
+        const titles = { social:'قنواتي الرسمية', ai:'أدوات الذكاء الاصطناعي', sports:'رياضة مباشر', news:'أخبار اليوم', games:'ألعاب ذكية', soft:'برامج الكمبيوتر', prompts:'مكتبة الأوامر' };
+        document.getElementById('viewTitle').innerText = titles[c];
+        document.getElementById('toolsView').style.display = 'block';
+        window.scrollTo(0,0);
     }
 
-    let currentLang = 'ar'; let currentCat = 'social';
+    function goHome() {
+        document.getElementById('toolsView').style.display = 'none';
+        document.getElementById('homeUI').style.display = 'block';
+    }
+
+    function copyP(t) { navigator.clipboard.writeText(t); alert('تم نسخ الأمر بنجاح!'); }
 
     function toggleTheme() {
-        const b = document.body; b.classList.toggle('light-mode');
-        document.getElementById('themeIcon').className = b.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
-        localStorage.setItem('theme', b.classList.contains('light-mode') ? 'light' : 'dark');
+        document.body.classList.toggle('light-mode');
+        document.getElementById('themeIcon').className = document.body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
     }
 
-    function changeLang(l) {
-        currentLang = l; document.getElementById('mainHtml').dir = (l === 'ar') ? 'rtl' : 'ltr';
-        document.getElementById('search').placeholder = uiStrings[l].search;
-        renderNav(); render();
+    function initTimer() {
+        const target = new Date("April 15, 2026 21:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = target - now;
+            const h = Math.floor((d % (1000*60*60*24)) / (1000*60*60));
+            const m = Math.floor((d % (1000*60*60)) / (1000*60));
+            const s = Math.floor((d % (1000*60)) / 1000);
+            document.getElementById('timer').innerText = `${h}h : ${m}m : ${s}s`;
+        }, 1000);
+    }
+    initTimer();
+
+    function shareSite() {
+        const shareData = { title: 'Salah Mekkawey Hub', text: 'شوف تطبيق صلاح مكاوي للأدوات الذكية والرياضة!', url: window.location.href };
+        if (navigator.share) { navigator.share(shareData); } 
+        else { window.open(`https://wa.me/?text=شوف تطبيق صلاح مكاوي الرهيب: ${window.location.href}`, '_blank'); }
     }
 
-    function renderNav() {
-        const nav = document.getElementById('navContainer');
-        const cats = ['social', 'ai', 'sports', 'news', 'games', 'soft'];
-        const icons = { social: 'share-alt', ai: 'robot', sports: 'futbol', news: 'newspaper', games: 'gamepad', soft: 'desktop' };
-        nav.innerHTML = cats.map(c => {
-            let count = items.filter(i => i.cat === c).length;
-            return `<div class="nav-btn ${currentCat === c ? 'active' : ''}" onclick="setCat('${c}', this)"><i class="fas fa-${icons[c]}"></i> ${uiStrings[currentLang][c]} <span class="nav-counter">${count}</span></div>`;
-        }).join('');
-    }
-
-    function setCat(c, btn) { currentCat = c; renderNav(); render(); }
-
-    function render(s = "") {
-        const g = document.getElementById('mainGrid'); g.innerHTML = "";
-        const f = items.filter(t => t.cat === currentCat && t.name.toLowerCase().includes(s.toLowerCase()));
-        f.forEach(t => {
-            let d = typeof t.desc === 'object' ? t.desc[currentLang] : t.desc;
-            // حل مشكلة الروابط: استخدام window.open لضمان الفتح في المتصفحات الصارمة
-            g.innerHTML += `
-                <div class="card ${t.class || ''}">
-                    <h3>${t.name}</h3>
-                    <p>${d}</p>
-                    <button onclick="window.open('${t.link}', '_blank')" class="btn">${uiStrings[currentLang].enter}</button>
-                </div>`;
-        });
-    }
-
-    if (localStorage.getItem('theme') === 'light') toggleTheme();
-    changeLang('ar');
+    let defP; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defP = e; });
+    document.getElementById('installBtn').onclick = () => { if(defP) defP.prompt(); else alert('افتح القائمة واختار Install App'); };
 </script>
 </body>
 </html>
