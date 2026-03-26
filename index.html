@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salah Mekkawey - Ultimate Hub</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/7c3aed/ffffff?text=S">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -16,45 +20,27 @@
             --text: #0f172a; --accent: #6d28d9; --neon: #7c3aed;
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; transition: var(--trans); overflow-x: hidden; }
-        
         .header { text-align: center; padding: 25px 20px; position: relative; }
         .top-controls { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 1001; }
         [dir="ltr"] .top-controls { left: auto; right: 20px; }
-        
         .lang-switcher, .theme-toggle { background: var(--card-bg); border: 1px solid rgba(0,0,0,0.1); color: var(--text); padding: 10px; border-radius: 12px; cursor: pointer; backdrop-filter: blur(10px); transition: 0.3s; }
-        .lang-switcher:hover, .theme-toggle:hover { border-color: var(--neon); }
-
         .main-logo { width: 70px; height: 70px; margin: 0 auto 10px; filter: drop-shadow(0 0 10px var(--neon)); animation: float 3s infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        
-        .upload-btn { background: linear-gradient(45deg, #ff0050, #00f2ea); color: white; border: none; padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
-        .upload-btn:hover { transform: scale(1.05); }
-
+        .upload-btn { background: linear-gradient(45deg, #ff0050, #00f2ea); color: white; border: none; padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .nav-container { display: flex; gap: 10px; overflow-x: auto; padding: 15px; background: var(--nav-bg); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .nav-container::-webkit-scrollbar { display: none; }
         .nav-btn { background: var(--card-bg); padding: 12px 20px; border-radius: 15px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 8px; font-weight: 600; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; }
         .nav-btn.active { background: var(--accent); color: white; border-color: var(--neon); }
         .nav-counter { background: var(--red); color: white; font-size: 10px; padding: 2px 7px; border-radius: 50px; font-weight: bold; }
-
         .controls { max-width: 800px; margin: 20px auto; padding: 0 20px; display: flex; gap: 10px; }
         .search-bar { flex: 1; padding: 14px; border-radius: 50px; background: var(--card-bg); border: 1px solid rgba(0,0,0,0.1); color: var(--text); outline: none; text-align: center; }
-        .view-toggle { width: 48px; height: 48px; border-radius: 50%; background: var(--card-bg); border: 1px solid rgba(0,0,0,0.1); color: var(--neon); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-
-        .main-grid { display: grid; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; min-height: 400px; }
+        .main-grid { display: grid; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .grid-view { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-        .list-view { grid-template-columns: 1fr; }
-        .list-view .card { display: flex; align-items: center; justify-content: space-between; text-align: inherit; }
-        .list-view .card p { margin: 0 20px; height: auto; flex: 1; }
-        .list-view .btn { width: auto; min-width: 120px; margin: 0; }
-
-        .card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; animation: fadeIn 0.4s ease; backdrop-filter: blur(5px); }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .card h3 { margin: 0 0 8px; color: var(--neon); font-size: 19px; }
-        .card p { font-size: 13px; color: #94a3b8; height: 40px; overflow: hidden; line-height: 1.5; }
+        .card p { font-size: 13px; color: #94a3b8; height: 40px; overflow: hidden; }
         .btn { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 10px; transition: 0.3s; }
-        .btn:hover { filter: brightness(1.2); letter-spacing: 0.5px; }
-
         .footer { text-align: center; padding: 50px 20px; opacity: 0.7; font-size: 14px; border-top: 1px solid rgba(0,0,0,0.05); font-weight: bold; }
     </style>
 </head>
@@ -70,15 +56,14 @@
     <svg class="main-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="48" stroke="url(#p1)" stroke-width="4"/><path d="M30 50L45 65L75 35" stroke="#00f2ff" stroke-width="6" stroke-linecap="round"/><defs><linearGradient id="p1" x1="0" y1="0" x2="100" y2="100"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#00f2ff"/></linearGradient></defs>
     </svg>
-    <h1 style="margin:0; font-family: Arial, sans-serif;">Salah Mekkawey</h1>
-    <button class="upload-btn" onclick="alert('Upload system is being processed. Coming soon!')"><i class="fas fa-cloud-upload-alt"></i> Upload Video</button>
+    <h1 style="margin:0;">Salah Mekkawey</h1>
+    <button class="upload-btn" onclick="alert('System will be on Play Store soon!')"><i class="fas fa-mobile-alt"></i> Install App</button>
 </div>
 
 <div class="nav-container" id="navContainer"></div>
 
 <div class="controls">
     <input type="text" id="search" class="search-bar" placeholder="...">
-    <div class="view-toggle" onclick="toggleView()"><i id="viewIcon" class="fas fa-th-list"></i></div>
 </div>
 
 <div class="main-grid grid-view" id="mainGrid"></div>
@@ -86,94 +71,99 @@
 <div class="footer"><p id="ui-footer">© 2026 Salah Mekkawey | All Rights Reserved</p></div>
 
 <script>
+    // تسجيل ملف التطبيق (Service Worker)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then(() => console.log("PWA Active"));
+    }
+
     const uiStrings = {
-        ar: { search: "ابحث عن أداة، ماتش، خبر، أو لعبة...", ai: "ذكاء اصطناعي", sports: "رياضة مباشر", news: "أخبار اليوم", games: "ألعاب", soft: "برامج", enter: "دخول الآن" },
-        en: { search: "Search for tool, match, news...", ai: "AI Tools", sports: "Sports", news: "Global News", games: "Games", soft: "Software", enter: "Access" },
-        fr: { search: "Chercher outil, match, actu...", ai: "Outils IA", sports: "Sports", news: "Actualités", games: "Jeux", soft: "Logiciels", enter: "Entrer" }
+        ar: { search: "ابحث عن أداة، ماتش، خبر...", ai: "ذكاء اصطناعي", sports: "رياضة مباشر", news: "أخبار اليوم", games: "ألعاب", soft: "برامج", enter: "دخول الآن" },
+        en: { search: "Search tool, match, news...", ai: "AI Tools", sports: "Sports", news: "Global News", games: "Games", soft: "Software", enter: "Access" },
+        fr: { search: "Chercher outil, actu...", ai: "Outils IA", sports: "Sports", news: "Actualités", games: "Jeux", soft: "Logiciels", enter: "Entrer" }
     };
 
     const items = [
-        // رياضة (5 مواقع حقيقية)
-        { cat:'sports', name:'Yacine TV', desc:{ar:'أفضل تطبيق لمتابعة المباريات والقنوات.', en:'Live sports streaming app.', fr:'Sports en direct.'}, link:'https://yacineapp.tv/' },
-        { cat:'sports', name:'Kora Live', desc:{ar:'تغطية حية لجميع مباريات اليوم.', en:'Live coverage for all matches.', fr:'Matchs en direct.'}, link:'https://koora-live.me/' },
-        { cat:'sports', name:'Yalla Kora', desc:{ar:'أدق النتائج والمواعيد والترتيب.', en:'Accurate scores and schedules.', fr:'Scores et horaires.'}, link:'https://www.yallakora.com/' },
-        { cat:'sports', name:'365Scores', desc:{ar:'تنبيهات مباشرة للأهداف والنتائج.', en:'Live goals and alerts.', fr:'Alertes buts.'}, link:'https://www.365scores.com' },
-        { cat:'sports', name:'FilGoal', desc:{ar:'أخبار الكورة المصرية والعالمية.', en:'Egyptian football news.', fr:'Infos foot égyptien.'}, link:'https://www.filgoal.com' },
+        // رياضة
+        { cat:'sports', name:'Yacine TV', desc:{ar:'تطبيق البث المباشر الأول.', en:'Live sports streaming.', fr:'Sports live.'}, link:'https://yacineapp.tv/' },
+        { cat:'sports', name:'Kora Live', desc:{ar:'تغطية حية لكل الماتشات.', en:'Live coverage.', fr:'Direct.'}, link:'https://koora-live.me/' },
+        { cat:'sports', name:'Yalla Kora', desc:{ar:'نتائج ومواعيد دقيقة.', en:'Accurate scores.', fr:'Résultats.'}, link:'https://www.yallakora.com/' },
+        { cat:'sports', name:'365Scores', desc:{ar:'تنبيهات أهداف فورية.', en:'Live goals alerts.', fr:'Alertes buts.'}, link:'https://www.365scores.com' },
+        { cat:'sports', name:'FilGoal', desc:{ar:'أخبار الكورة المصرية.', en:'Egyptian football.', fr:'Infos foot.'}, link:'https://www.filgoal.com' },
 
-        // ذكاء اصطناعي (50 أداة حقيقية مترجمة)
-        { cat:'ai', name:'ChatGPT', desc:{ar:'مساعد نصوص وبرمجة وتأليف.', en:'AI Writing and coding master.', fr:'Maître de l\'écriture IA.'}, link:'https://chat.openai.com' },
-        { cat:'ai', name:'Leonardo AI', desc:{ar:'تصميم صور وشخصيات كرتونية.', en:'Pro cartoon and image design.', fr:'Conception d\'images pro.'}, link:'https://leonardo.ai' },
-        { cat:'ai', name:'ElevenLabs', desc:{ar:'أفضل تعليق صوتي بشري واقعي.', en:'Realistic AI voiceovers.', fr:'Voix IA réaliste.'}, link:'https://elevenlabs.io' },
-        { cat:'ai', name:'Midjourney', desc:{ar:'صور فنية بجودة سينمائية.', en:'Cinematic art quality.', fr:'Qualité ciné.'}, link:'https://midjourney.com' },
-        { cat:'ai', name:'Luma Dream', desc:{ar:'تحويل الصور لفيديوهات متحركة.', en:'Transform photos into video.', fr:'Photos en vidéo.'}, link:'https://lumalabs.ai' },
-        { cat:'ai', name:'Claude AI', desc:{ar:'مساعد ذكي جداً في تحليل البيانات.', en:'Smart data analysis.', fr:'Analyse intelligente.'}, link:'https://claude.ai' },
-        { cat:'ai', name:'HeyGen', desc:{ar:'إنشاء فيديوهات بمتحدث واقعي.', en:'AI Video avatars.', fr:'Avatars vidéo IA.'}, link:'https://heygen.com' },
-        { cat:'ai', name:'D-ID', desc:{ar:'جعل الصور تتكلم وتتحرك.', en:'Make photos talk.', fr:'Faire parler les photos.'}, link:'https://d-id.com' },
-        { cat:'ai', name:'Runway', desc:{ar:'مونتاج وتوليد فيديو ذكي.', en:'AI Video generation.', fr:'Génération vidéo IA.'}, link:'https://runwayml.com' },
-        { cat:'ai', name:'Suno AI', desc:{ar:'تأليف أغاني كاملة بالكلمات.', en:'Create songs with lyrics.', fr:'Créer des chansons.'}, link:'https://suno.com' },
-        { cat:'ai', name:'Perplexity', desc:{ar:'محرك بحث ذكي بالمصادر.', en:'AI Search with sources.', fr:'Recherche intelligente.'}, link:'https://perplexity.ai' },
-        { cat:'ai', name:'Jasper', desc:{ar:'كتابة مقالات تسويقية.', en:'Marketing copy tool.', fr:'Rédaction marketing.'}, link:'https://jasper.ai' },
-        { cat:'ai', name:'Upscayl', desc:{ar:'تكبير وتحسين جودة الصور.', en:'Image upscaler.', fr:'Agrandisseur.'}, link:'https://upscayl.org' },
-        { cat:'ai', name:'Adobe Firefly', desc:{ar:'رسم ذكي من أدوبي.', en:'Adobe generative AI.', fr:'L\'IA d\'Adobe.'}, link:'https://firefly.adobe.com' },
-        { cat:'ai', name:'Remove.bg', desc:{ar:'مسح خلفية الصور فوراً.', en:'Remove backgrounds.', fr:'Supprimer les fonds.'}, link:'https://remove.bg' },
-        { cat:'ai', name:'Synthesia', desc:{ar:'مذيعين افتراضيين فيديو.', en:'AI Avatars for video.', fr:'Avatars IA pour vidéo.'}, link:'https://synthesia.io' },
-        { cat:'ai', name:'Grammarly', desc:{ar:'تدقيق لغوي وتصحيح.', en:'Grammar checker.', fr:'Correcteur.'}, link:'https://grammarly.com' },
-        { cat:'ai', name:'DeepL', desc:{ar:'أدق ترجمة عالمية.', en:'Accurate translation.', fr:'Traduction précise.'}, link:'https://deepl.com' },
-        { cat:'ai', name:'Looka', desc:{ar:'تصميم لوجو (شعار) ذكي.', en:'AI Logo design.', fr:'Design de logo IA.'}, link:'https://looka.com' },
-        { cat:'ai', name:'Krisp', desc:{ar:'عزل ضوضاء الميكروفون.', en:'Noise removal.', fr:'Suppression de bruit.'}, link:'https://krisp.ai' },
-        { cat:'ai', name:'Gemini', desc:{ar:'ذكاء جوجل المتطور.', en:'Google advanced AI.', fr:'L\'IA de Google.'}, link:'https://gemini.google.com' },
-        { cat:'ai', name:'Udio', desc:{ar:'إنتاج موسيقى احترافية.', en:'Pro music production.', fr:'Musique pro.'}, link:'https://udio.com' },
-        { cat:'ai', name:'Pika Labs', desc:{ar:'تحريك أجزاء الصور.', en:'Animate images.', fr:'Animer des images.'}, link:'https://pika.art' },
-        { cat:'ai', name:'Copy.ai', desc:{ar:'أفكار للسوشيال ميديا.', en:'Social media posts.', fr:'Posts réseaux sociaux.'}, link:'https://copy.ai' },
-        { cat:'ai', name:'Ideogram', desc:{ar:'نصوص دقيقة داخل الصور.', en:'Precise text in images.', fr:'Texte dans les images.'}, link:'https://ideogram.ai' },
-        { cat:'ai', name:'Krea AI', desc:{ar:'تحسين الصور فوراً.', en:'Image enhancement.', fr:'Amélioration.'}, link:'https://krea.ai' },
-        { cat:'ai', name:'Gamma AI', desc:{ar:'عروض تقديمية ذكية.', en:'AI Presentations.', fr:'Présentations IA.'}, link:'https://gamma.app' },
-        { cat:'ai', name:'Tome', desc:{ar:'بناء قصص تفاعلية.', en:'Interactive storytelling.', fr:'Narration.'}, link:'https://tome.app' },
-        { cat:'ai', name:'InVideo', desc:{ar:'فيديو من نصوص.', en:'Text to video.', fr:'Texte en vidéo.'}, link:'https://invideo.io' },
-        { cat:'ai', name:'Voice.ai', desc:{ar:'تغيير نبرة الصوت.', en:'Voice changer.', fr:'Changeur de voix.'}, link:'https://voice.ai' },
-        { cat:'ai', name:'Murf', desc:{ar:'تعليق صوتي فخم.', en:'Pro voiceovers.', fr:'Voix pro.'}, link:'https://murf.ai' },
-        { cat:'ai', name:'Lalal.ai', desc:{ar:'فصل الصوت عن الموسيقى.', en:'Voice separator.', fr:'Séparateur.'}, link:'https://lalal.ai' },
-        { cat:'ai', name:'Soundraw', desc:{ar:'ألحان بدون حقوق.', en:'Royalty-free music.', fr:'Musique libre.'}, link:'https://soundraw.io' },
-        { cat:'ai', name:'Descript', desc:{ar:'تعديل صوت بنصوص.', en:'Audio editing by text.', fr:'Édition audio.'}, link:'https://descript.com' },
-        { cat:'ai', name:'CapCut AI', desc:{ar:'مونتاج ذكي للفيديو.', en:'AI Video editing.', fr:'Édition vidéo IA.'}, link:'https://capcut.com' },
-        { cat:'ai', name:'Kaiber', desc:{ar:'أنميشن فيديو إبداعي.', en:'Creative animation.', fr:'Animation.'}, link:'https://kaiber.ai' },
-        { cat:'ai', name:'Photoroom', desc:{ar:'تصوير منتجات.', en:'Product photography.', fr:'Photos produits.'}, link:'https://photoroom.com' },
-        { cat:'ai', name:'Otter', desc:{ar:'تحويل صوت لنص.', en:'Audio transcription.', fr:'Transcription.'}, link:'https://otter.ai' },
-        { cat:'ai', name:'Quillbot', desc:{ar:'إعادة صياغة ذكية.', en:'Paraphrasing tool.', fr:'Paraphrase.'}, link:'https://quillbot.com' },
+        // ذكاء اصطناعي (50 أداة حقيقية)
+        { cat:'ai', name:'ChatGPT', desc:{ar:'كتابة نصوص وبرمجة.', en:'AI Writing/Coding.', fr:'IA Texte.'}, link:'https://chat.openai.com' },
+        { cat:'ai', name:'Leonardo AI', desc:{ar:'تصميم كرتون احترافي.', en:'Image design.', fr:'Images IA.'}, link:'https://leonardo.ai' },
+        { cat:'ai', name:'ElevenLabs', desc:{ar:'أفضل تعليق صوتي.', en:'AI Voice.', fr:'Voix IA.'}, link:'https://elevenlabs.io' },
+        { cat:'ai', name:'Midjourney', desc:{ar:'صور فنية سينمائية.', en:'Art quality.', fr:'Art.'}, link:'https://midjourney.com' },
+        { cat:'ai', name:'Luma Labs', desc:{ar:'صور لفيديو متحرك.', en:'Image to video.', fr:'Images en vidéo.'}, link:'https://lumalabs.ai' },
+        { cat:'ai', name:'Claude AI', desc:{ar:'تحليل بيانات دقيق.', en:'Data analysis.', fr:'Analyse.'}, link:'https://claude.ai' },
+        { cat:'ai', name:'HeyGen', desc:{ar:'فيديو متحدث واقعي.', en:'Video avatars.', fr:'Avatars.'}, link:'https://heygen.com' },
+        { cat:'ai', name:'D-ID', desc:{ar:'جعل الصور تتكلم.', en:'Talking photos.', fr:'Photos.'}, link:'https://d-id.com' },
+        { cat:'ai', name:'Runway', desc:{ar:'مونتاج وتوليد فيديو.', en:'Video editor.', fr:'Éditeur.'}, link:'https://runwayml.com' },
+        { cat:'ai', name:'Suno AI', desc:{ar:'تأليف أغاني كاملة.', en:'Create songs.', fr:'Chansons.'}, link:'https://suno.com' },
+        { cat:'ai', name:'Perplexity', desc:{ar:'بحث ذكي بالمصادر.', en:'Search tools.', fr:'Recherche.'}, link:'https://perplexity.ai' },
+        { cat:'ai', name:'Jasper', desc:{ar:'كتابة مقالات تسويقية.', en:'Marketing copy.', fr:'Copie.'}, link:'https://jasper.ai' },
+        { cat:'ai', name:'Upscayl', desc:{ar:'تحسين جودة الصور.', en:'Image upscaler.', fr:'Agrandir.'}, link:'https://upscayl.org' },
+        { cat:'ai', name:'Adobe Firefly', desc:{ar:'رسم ذكي من أدوبي.', en:'Adobe AI.', fr:'IA Adobe.'}, link:'https://firefly.adobe.com' },
+        { cat:'ai', name:'Remove.bg', desc:{ar:'مسح خلفية الصور.', en:'Bg remover.', fr:'Supprimer fond.'}, link:'https://remove.bg' },
+        { cat:'ai', name:'Synthesia', desc:{ar:'مذيعين افتراضيين.', en:'AI Avatars.', fr:'Avatars IA.'}, link:'https://synthesia.io' },
+        { cat:'ai', name:'Grammarly', desc:{ar:'تصحيح لغوي.', en:'Grammar check.', fr:'Correcteur.'}, link:'https://grammarly.com' },
+        { cat:'ai', name:'DeepL', desc:{ar:'أدق ترجمة عالمية.', en:'Accurate translation.', fr:'Traduction.'}, link:'https://deepl.com' },
+        { cat:'ai', name:'Looka', desc:{ar:'تصميم شعارات.', en:'Logo design.', fr:'Design.'}, link:'https://looka.com' },
+        { cat:'ai', name:'Krisp', desc:{ar:'عزل الضوضاء.', en:'Noise removal.', fr:'Bruit.'}, link:'https://krisp.ai' },
+        { cat:'ai', name:'Gemini', desc:{ar:'ذكاء جوجل المتطور.', en:'Google AI.', fr:'Google IA.'}, link:'https://gemini.google.com' },
+        { cat:'ai', name:'Udio', desc:{ar:'إنتاج موسيقى برو.', en:'Pro music.', fr:'Musique.'}, link:'https://udio.com' },
+        { cat:'ai', name:'Pika Labs', desc:{ar:'تحريك أجزاء الصور.', en:'Animate image.', fr:'Animation.'}, link:'https://pika.art' },
+        { cat:'ai', name:'Copy.ai', desc:{ar:'أفكار سوشيال ميديا.', en:'Social posts.', fr:'Posts.'}, link:'https://copy.ai' },
+        { cat:'ai', name:'Ideogram', desc:{ar:'نصوص داخل الصور.', en:'Text in images.', fr:'Texte.'}, link:'https://ideogram.ai' },
+        { cat:'ai', name:'Krea AI', desc:{ar:'تحسين الصور فوراً.', en:'Image enhance.', fr:'Améliorer.'}, link:'https://krea.ai' },
+        { cat:'ai', name:'Gamma AI', desc:{ar:'عروض تقديمية.', en:'Presentations.', fr:'Présentation.'}, link:'https://gamma.app' },
+        { cat:'ai', name:'Tome', desc:{ar:'بناء قصص ذكية.', en:'AI stories.', fr:'Histoires.'}, link:'https://tome.app' },
+        { cat:'ai', name:'InVideo', desc:{ar:'فيديو من نصوص.', en:'Video from text.', fr:'Vidéo.'}, link:'https://invideo.io' },
+        { cat:'ai', name:'Voice.ai', desc:{ar:'تغيير نبرة الصوت.', en:'Voice changer.', fr:'Voix.'}, link:'https://voice.ai' },
+        { cat:'ai', name:'Murf', desc:{ar:'تعليق صوتي برو.', en:'Pro voice.', fr:'Voix pro.'}, link:'https://murf.ai' },
+        { cat:'ai', name:'Lalal.ai', desc:{ar:'فصل الصوت عن المزيكا.', en:'Voice separator.', fr:'Séparateur.'}, link:'https://lalal.ai' },
+        { cat:'ai', name:'Soundraw', desc:{ar:'ألحان بدون حقوق.', en:'Free music.', fr:'Musique.'}, link:'https://soundraw.io' },
+        { cat:'ai', name:'Descript', desc:{ar:'تعديل صوت بنصوص.', en:'Audio editor.', fr:'Éditeur.'}, link:'https://descript.com' },
+        { cat:'ai', name:'CapCut AI', desc:{ar:'مونتاج ذكي.', en:'Smart edit.', fr:'Édition.'}, link:'https://capcut.com' },
+        { cat:'ai', name:'Kaiber', desc:{ar:'أنميشن فيديو إبداعي.', en:'Animation.', fr:'Animation.'}, link:'https://kaiber.ai' },
+        { cat:'ai', name:'Photoroom', desc:{ar:'تصوير منتجات.', en:'Product photos.', fr:'Photos.'}, link:'https://photoroom.com' },
+        { cat:'ai', name:'Otter', desc:{ar:'تحويل صوت لنص.', en:'Transcription.', fr:'Transcrire.'}, link:'https://otter.ai' },
+        { cat:'ai', name:'Quillbot', desc:{ar:'إعادة صياغة.', en:'Paraphrasing.', fr:'Paraphrase.'}, link:'https://quillbot.com' },
         { cat:'ai', name:'Notion AI', desc:{ar:'تنظيم ملاحظات.', en:'Smart notes.', fr:'Notes.'}, link:'https://notion.so' },
-        { cat:'ai', name:'Beautiful.ai', desc:{ar:'شرايح عرض آلية.', en:'Automated slide decks.', fr:'Diapositives.'}, link:'https://beautiful.ai' },
-        { cat:'ai', name:'Pictory', desc:{ar:'فيديو من مقال.', en:'Video from article.', fr:'Vidéo.'}, link:'https://pictory.ai' },
-        { cat:'ai', name:'Playground', desc:{ar:'رسم صور مجاني.', en:'Free image generation.', fr:'Génération d\'images.'}, link:'https://playground.com' },
-        { cat:'ai', name:'Lexica', desc:{ar:'محرك بحث صور الـ AI.', en:'AI image search.', fr:'Recherche.'}, link:'https://lexica.art' },
+        { cat:'ai', name:'Beautiful.ai', desc:{ar:'شرايح آلية.', en:'AI Slides.', fr:'Diapositives.'}, link:'https://beautiful.ai' },
+        { cat:'ai', name:'Pictory', desc:{ar:'فيديو من مقال.', en:'Video/Text.', fr:'Vidéo.'}, link:'https://pictory.ai' },
+        { cat:'ai', name:'Playground', desc:{ar:'رسم صور مجاني.', en:'Free drawing.', fr:'Dessin.'}, link:'https://playground.com' },
+        { cat:'ai', name:'Lexica', desc:{ar:'بحث صور الـ AI.', en:'Image search.', fr:'Recherche.'}, link:'https://lexica.art' },
         { cat:'ai', name:'Stable Diffusion', desc:{ar:'رسم مفتوح المصدر.', en:'AI drawing.', fr:'IA Dessin.'}, link:'https://stablediffusionweb.com' },
-        { cat:'ai', name:'Jasper Art', desc:{ar:'صور فنية بالذكاء.', en:'Creative AI art.', fr:'Art IA.'}, link:'https://jasper.ai/art' },
-        { cat:'ai', name:'Skybox', desc:{ar:'بيئات 360 درجة.', en:'360 environments.', fr:'Environnements 360.'}, link:'https://blockadelabs.com' },
-        { cat:'ai', name:'Meshy', desc:{ar:'نماذج 3D من نص.', en:'3D from text.', fr:'3D par texte.'}, link:'https://meshy.ai' },
-        { cat:'ai', name:'Spline', desc:{ar:'تصميم 3D للموقع.', en:'Web 3D design.', fr:'3D Web.'}, link:'https://spline.design' },
-        { cat:'ai', name:'Poised', desc:{ar:'تحسين الإلقاء.', en:'Communication coach.', fr:'Coach.'}, link:'https://poised.com' },
+        { cat:'ai', name:'Jasper Art', desc:{ar:'صور فنية بالذكاء.', en:'Art generation.', fr:'Génération d\'art.'}, link:'https://jasper.ai/art' },
+        { cat:'ai', name:'Skybox', desc:{ar:'بيئات 360 درجة.', en:'360 worlds.', fr:'Mondes 360.'}, link:'https://blockadelabs.com' },
+        { cat:'ai', name:'Meshy', desc:{ar:'مجسمات من نص.', en:'3D from text.', fr:'3D par texte.'}, link:'https://meshy.ai' },
+        { cat:'ai', name:'Spline', desc:{ar:'تصميم 3D ويب.', en:'Web 3D.', fr:'3D Web.'}, link:'https://spline.design' },
+        { cat:'ai', name:'Poised', desc:{ar:'تحسين الإلقاء.', en:'Speech coach.', fr:'Coach.'}, link:'https://poised.com' },
 
-        // أخبار (4 مواقع)
-        { cat:'news', name:'Sky News', desc:{ar:'أخبار العالم والسياسة والاقتصاد.', en:'Politics and Economy news.', fr:'Infos monde.'}, link:'https://www.skynewsarabia.com' },
-        { cat:'news', name:'CNBC العربية', desc:{ar:'تحليلات المال والبورصة.', en:'Market analysis.', fr:'Économie.'}, link:'https://www.cnbcarabia.com' },
-        { cat:'news', name:'اليوم السابع', desc:{ar:'أخبار المجتمع والتريند في مصر.', en:'Egypt social news.', fr:'Infos Égypte.'}, link:'https://www.youm7.com' },
-        { cat:'news', name:'مصراوي', desc:{ar:'منوعات وأخبار اجتماعية مصرية.', en:'Egyptian lifestyle news.', fr:'Infos sociales.'}, link:'https://www.masrawy.com' },
+        // أخبار
+        { cat:'news', name:'Sky News', desc:{ar:'أخبار العالم.', en:'World news.', fr:'Infos monde.'}, link:'https://www.skynewsarabia.com' },
+        { cat:'news', name:'CNBC', desc:{ar:'تحليلات البورصة.', en:'Market news.', fr:'Économie.'}, link:'https://www.cnbcarabia.com' },
+        { cat:'news', name:'اليوم السابع', desc:{ar:'أخبار مصر.', en:'Egypt news.', fr:'Infos Égypte.'}, link:'https://www.youm7.com' },
+        { cat:'news', name:'مصراوي', desc:{ar:'منوعات اجتماعية.', en:'Social news.', fr:'Infos sociales.'}, link:'https://www.masrawy.com' },
 
-        // ألعاب (5 ألعاب)
-        { cat:'games', name:'Akinator', desc:{ar:'المارد السحري الشهير.', en:'The Web Genius.', fr:'Le Génie.'}, link:'https://ar.akinator.com' },
-        { cat:'games', name:'Quick Draw', desc:{ar:'ارسم وجوجل يخمن رسمتك.', en:'Draw & AI guess.', fr:'Dessinez.'}, link:'https://quickdraw.withgoogle.com' },
-        { cat:'games', name:'Infinite Craft', desc:{ar:'دمج العناصر الممتع.', en:'Element merging.', fr:'Fusion.'}, link:'https://neal.fun/infinite-craft/' },
-        { cat:'games', name:'AI Dungeon', desc:{ar:'عالم قصص خيالية تكتبه بنفسك.', en:'AI stories.', fr:'Histoires.'}, link:'https://aidungeon.com' },
-        { cat:'games', name:'Emoji Hunt', desc:{ar:'ابحث عن الأشياء بكاميرا موبايلك.', en:'Search by camera.', fr:'Chercher.'}, link:'https://emojiscavengerhunt.withgoogle.com/' },
+        // ألعاب
+        { cat:'games', name:'Akinator', desc:{ar:'المارد السحري.', en:'The Genius.', fr:'Le Génie.'}, link:'https://ar.akinator.com' },
+        { cat:'games', name:'Quick Draw', desc:{ar:'ارسم وجوجل يخمن.', en:'Draw & AI.', fr:'Dessinez.'}, link:'https://quickdraw.withgoogle.com' },
+        { cat:'games', name:'Infinite Craft', desc:{ar:'دمج العناصر.', en:'Merging.', fr:'Fusion.'}, link:'https://neal.fun/infinite-craft/' },
+        { cat:'games', name:'AI Dungeon', desc:{ar:'قصص خيالية.', en:'AI stories.', fr:'Histoires.'}, link:'https://aidungeon.com' },
+        { cat:'games', name:'Emoji Hunt', desc:{ar:'ابحث بالكاميرا.', en:'Emoji camera.', fr:'Chercher.'}, link:'https://emojiscavengerhunt.withgoogle.com/' },
 
-        // برامج (5 برامج)
-        { cat:'soft', name:'Photopea', desc:{ar:'بديل فوتوشوب مجاني أونلاين.', en:'Free Photoshop.', fr:'Photoshop.'}, link:'https://www.photopea.com/' },
-        { cat:'soft', name:'CapCut PC', desc:{ar:'أفضل برنامج مونتاج فيديو.', en:'Best video editor.', fr:'Éditeur.'}, link:'https://www.capcut.com/desktop/' },
-        { cat:'soft', name:'OBS Studio', desc:{ar:'تصوير شاشة وبث مباشر.', en:'Screen recording.', fr:'Capture.'}, link:'https://obsproject.com/' },
-        { cat:'soft', name:'VLC Player', desc:{ar:'مشغل الميديا الأشهر.', en:'Media player.', fr:'Lecteur.'}, link:'https://www.videolan.org/' },
-        { cat:'soft', name:'WinRAR', desc:{ar:'فك ضغط الملفات وتحميلها.', en:'File extraction.', fr:'Extraction.'}, link:'https://www.win-rar.com/' }
+        // برامج
+        { cat:'soft', name:'Photopea', desc:{ar:'بديل فوتوشوب.', en:'Free Photoshop.', fr:'Photoshop.'}, link:'https://www.photopea.com/' },
+        { cat:'soft', name:'CapCut PC', desc:{ar:'مونتاج فيديو.', en:'Video editor.', fr:'Éditeur.'}, link:'https://www.capcut.com/desktop/' },
+        { cat:'soft', name:'OBS Studio', desc:{ar:'تصوير شاشة.', en:'Recording.', fr:'Capture.'}, link:'https://obsproject.com/' },
+        { cat:'soft', name:'VLC Player', desc:{ar:'مشغل ميديا.', en:'Media player.', fr:'Lecteur.'}, link:'https://www.videolan.org/' },
+        { cat:'soft', name:'WinRAR', desc:{ar:'فك الضغط.', en:'Extraction.', fr:'Extraction.'}, link:'https://www.win-rar.com/' }
     ];
 
-    let currentLang = 'ar'; let currentCat = 'ai'; let isGrid = true;
+    let currentLang = 'ar'; let currentCat = 'ai';
 
     function toggleTheme() {
         const b = document.getElementById('body'); b.classList.toggle('light-mode');
@@ -184,7 +174,6 @@
     function changeLang(l) {
         currentLang = l; document.getElementById('mainHtml').dir = (l === 'ar') ? 'rtl' : 'ltr';
         document.getElementById('search').placeholder = uiStrings[l].search;
-        document.getElementById('ui-footer').innerText = "© 2026 Salah Mekkawey | All Rights Reserved";
         renderNav(); render();
     }
 
@@ -200,16 +189,9 @@
 
     function setCat(c, btn) { currentCat = c; renderNav(); render(); }
 
-    function toggleView() {
-        isGrid = !isGrid;
-        const g = document.getElementById('mainGrid');
-        g.className = isGrid ? 'main-grid grid-view' : 'main-grid list-view';
-        document.getElementById('viewIcon').className = isGrid ? 'fas fa-th-list' : 'fas fa-th-large';
-    }
-
     function render(s = "") {
         const g = document.getElementById('mainGrid'); g.innerHTML = "";
-        const f = items.filter(t => t.cat === currentCat && (t.name.toLowerCase().includes(s.toLowerCase()) || (typeof t.desc === 'object' && t.desc[currentLang].includes(s))));
+        const f = items.filter(t => t.cat === currentCat && t.name.toLowerCase().includes(s.toLowerCase()));
         f.forEach(t => {
             let d = typeof t.desc === 'object' ? t.desc[currentLang] : t.desc;
             g.innerHTML += `<div class="card"><h3>${t.name}</h3><p>${d}</p><a href="${t.link}" target="_blank" class="btn">${uiStrings[currentLang].enter}</a></div>`;
