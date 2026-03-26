@@ -3,172 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salah Mekkawey - AI Tools</title>
+    <title>Salah Mekkawey - AI Universe</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { 
-            --primary: #1e1e2f; 
-            --secondary: #00e5ff; 
-            --accent: #6200ea;
-            --bg: #f4f7f6; 
+        /* الألوان والأساسيات */
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --neon-blue: #00f2ff;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
-        
-        .header { 
-            background: linear-gradient(135deg, var(--primary), var(--accent)); 
-            color: white; text-align: center; padding: 50px 20px; 
-            border-radius: 0 0 30px 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-        .logo-box {
-            background: white; color: var(--primary); width: 65px; height: 65px;
-            margin: 0 auto 15px; border-radius: 20px; display: flex;
-            align-items: center; justify-content: center; font-size: 35px; font-weight: 900;
-        }
-        .brand-name { font-size: 30px; font-weight: 900; margin: 0; letter-spacing: 1px; text-transform: uppercase; }
-        .sub-text { font-size: 15px; opacity: 0.9; margin-top: 8px; font-weight: 300; }
-
-        .search-container { max-width: 600px; margin: -25px auto 30px; padding: 0 20px; }
-        .search-bar { 
-            width: 100%; padding: 16px; border-radius: 50px; border: none; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-size: 16px; outline: none; 
-            box-sizing: border-box; text-align: center; font-weight: bold;
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 100%);
         }
 
-        .main-container { padding: 0 20px; max-width: 1200px; margin: 0 auto; }
-        
-        .category-title {
-            background: var(--primary); color: white; padding: 10px 20px;
-            border-radius: 10px; display: inline-block; margin: 30px 0 15px 0;
-            font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        /* الهيدر بتأثير احترافي */
+        .hero {
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.2), transparent);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; position: relative; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .card h3 { margin: 10px 0; color: #333; font-size: 20px; }
-        .card p { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 20px; height: 45px; overflow: hidden; }
-        
-        /* تصميم عداد الضغطات داخل الكارت */
-        .click-count { font-size: 11px; color: var(--accent); background: #f0e6ff; padding: 2px 8px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 10px; }
-
-        .btn { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 12px; font-weight: bold; transition: 0.3s; }
-        .btn:hover { background: var(--primary); }
-
-        .footer { text-align: center; margin-top: 50px; padding: 30px 20px; background: white; border-top: 1px solid #ddd; }
-        .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .social-icons a {
+        .logo-ring {
+            width: 80px; height: 80px;
+            border: 3px solid var(--neon-blue);
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            width: 45px; height: 45px; border-radius: 50%;
-            background: var(--bg); color: var(--primary); font-size: 22px;
-            text-decoration: none; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin: 0 auto 20px;
+            font-size: 40px; font-weight: 900;
+            box-shadow: 0 0 20px var(--neon-blue);
+            animation: pulse 2s infinite;
         }
-        
-        /* عداد الزوار الشامل */
-        .visitor-stats { margin: 15px 0; font-size: 14px; color: #444; background: #eee; padding: 10px; border-radius: 15px; display: inline-block; }
-        .visitor-stats b { color: var(--accent); }
 
-        .copyright { color: #888; font-size: 13px; font-weight: normal; margin-top: 10px; }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px var(--neon-blue); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px var(--neon-blue); }
+            100% { transform: scale(1); box-shadow: 0 0 10px var(--neon-blue); }
+        }
+
+        .hero h1 { font-size: 35px; margin: 0; letter-spacing: 2px; }
+        .hero p { opacity: 0.7; font-weight: 300; margin-top: 10px; }
+
+        /* شريط البحث */
+        .search-box {
+            max-width: 500px; margin: -30px auto 40px; padding: 0 20px;
+        }
+        .search-bar {
+            width: 100%; padding: 18px 25px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 100px;
+            color: white; font-size: 16px;
+            backdrop-filter: blur(10px);
+            outline: none; transition: 0.3s;
+            text-align: center;
+        }
+        .search-bar:focus { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
+
+        /* الحاوية وتنسيق الكروت */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .category-header {
+            font-size: 22px; font-weight: bold;
+            margin: 40px 0 20px; padding-right: 15px;
+            border-right: 4px solid var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+
+        .tool-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .tool-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-glow);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .tool-card h3 { margin: 0 0 10px 0; font-size: 20px; color: #fff; }
+        .tool-card p { font-size: 14px; color: #94a3b8; line-height: 1.6; height: 45px; margin-bottom: 20px; }
+
+        .stat-badge {
+            position: absolute; top: 15px; left: 15px;
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-glow);
+            padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: bold;
+        }
+
+        .visit-btn {
+            display: block; width: 100%; padding: 12px;
+            background: linear-gradient(90deg, var(--accent-glow), #6366f1);
+            color: white; text-decoration: none; border-radius: 14px;
+            font-weight: bold; text-align: center; transition: 0.3s;
+        }
+        .visit-btn:hover { filter: brightness(1.2); letter-spacing: 1px; }
+
+        /* الفوتر والعداد */
+        .footer {
+            margin-top: 80px; padding: 40px 20px;
+            background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+        .visitor-pill {
+            background: var(--card-bg); border: 1px solid var(--accent-glow);
+            padding: 10px 25px; border-radius: 50px; display: inline-flex;
+            align-items: center; gap: 10px; margin-bottom: 30px;
+        }
+        .social-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
+        .social-row a {
+            color: #fff; font-size: 24px; opacity: 0.6; transition: 0.3s;
+        }
+        .social-row a:hover { opacity: 1; transform: scale(1.2); color: var(--neon-blue); }
+
+        .copyright { font-size: 12px; opacity: 0.4; margin-top: 15px; }
+
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="logo-box">S</div>
-    <h1 class="brand-name">Salah Mekkawey</h1>
-    <p class="sub-text">الموسوعة الشاملة لأدوات الذكاء الاصطناعي العالمية</p>
+<div class="hero">
+    <div class="logo-ring">S</div>
+    <h1>Salah Mekkawey</h1>
+    <p>بوابتك العالمية لأقوى أدوات الذكاء الاصطناعي</p>
 </div>
 
-<div class="search-container">
-    <input type="text" id="mainSearch" class="search-bar" placeholder="ابحث عن أداة (مثال: تصميم، فيديو، كتابة)...">
+<div class="search-box">
+    <input type="text" id="mainSearch" class="search-bar" placeholder="ابحث عن أداة ذكية...">
 </div>
 
-<div class="main-container" id="contentDisplay"></div>
+<div class="container" id="contentDisplay"></div>
 
 <div class="footer">
-    <div class="visitor-stats">
-        <i class="fas fa-eye"></i> عدد زيارات الموقع: <b id="totalVisits">جاري التحميل...</b>
+    <div class="visitor-pill">
+        <i class="fas fa-users" style="color: var(--neon-blue);"></i>
+        <span>إجمالي الزيارات: <b id="totalVisits" style="color: var(--neon-blue);">...</b></span>
     </div>
 
-    <p>تابعني لمزيد من الشروحات والأدوات 🚀</p>
-    <div class="social-icons">
-        <a href="https://www.tiktok.com/@sala7mekkawy2?_r=1&_t=ZS-94zTMcXpkZh" target="_blank" title="تيك توك - رياضة"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.tiktok.com/@mix_toon0?_r=1&_t=ZS-94zTT7uxZCP" target="_blank" title="تيك توك - كرتون"><i class="fab fa-tiktok"></i></a>
-        <a href="https://youtube.com/@magiccartoon-x8n?si=6avZX0sri-fQesQ3" target="_blank" title="يوتيوب - كرتون"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.facebook.com/share/1CQkEX8ULH/" target="_blank" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+    <div class="social-row">
+        <a href="https://www.tiktok.com/@sala7mekkawy2" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.tiktok.com/@mix_toon0" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://youtube.com/@magiccartoon-x8n" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.facebook.com/share/1CQkEX8ULH/" target="_blank"><i class="fab fa-facebook-f"></i></a>
     </div>
-    <p class="copyright">© 2026 Salah Mekkawey | All Rights Reserved</p>
+    <p class="copyright">© 2026 Salah Mekkawey | AI Universe Project</p>
 </div>
 
 <script>
-    // الأدوات
     const allTools = [
+        // قسم النصوص
         { id: "gpt", name: "ChatGPT", cat: "أدوات النصوص والبرمجة", desc: "أشهر مساعد ذكي لكتابة المحتوى والبرمجة.", link: "https://chat.openai.com" },
         { id: "claude", name: "Claude", cat: "أدوات النصوص والبرمجة", desc: "ممتاز في تحليل الملفات الطويلة وكتابة الأكواد.", link: "https://claude.ai" },
         { id: "gemini", name: "Google Gemini", cat: "أدوات النصوص والبرمجة", desc: "ذكاء جوجل المتطور والمحدث دائماً.", link: "https://gemini.google.com" },
+        { id: "perp", name: "Perplexity", cat: "أدوات النصوص والبرمجة", desc: "محرك بحث ذكي بيعطيك إجابات مع المصادر.", link: "https://perplexity.ai" },
+        { id: "poe", name: "Poe", cat: "أدوات النصوص والبرمجة", desc: "منصة بتجمع كل روبوتات المحادثة في مكان واحد.", link: "https://poe.com" },
+        { id: "jasper", name: "Jasper", cat: "أدوات النصوص والبرمجة", desc: "مساعد كتابة قوي جداً للمسوقين وصناع المحتوى.", link: "https://jasper.ai" },
+        { id: "grammarly", name: "Grammarly", cat: "أدوات النصوص والبرمجة", desc: "تصحيح لغوي احترافي بالذكاء الاصطناعي.", link: "https://grammarly.com" },
+        { id: "quill", name: "Quillbot", cat: "أدوات النصوص والبرمجة", desc: "إعادة صياغة الجمل والفقرات باحترافية.", link: "https://quillbot.com" },
+        { id: "pdf", name: "ChatPDF", cat: "أدوات النصوص والبرمجة", desc: "ارفع أي ملف PDF واسأله عن محتواه.", link: "https://chatpdf.com" },
+        { id: "copyai", name: "Copy.ai", cat: "أدوات النصوص والبرمجة", desc: "كتابة إعلانات وبوستات سوشيال ميديا بسرعة.", link: "https://copy.ai" },
+
+        // قسم الصور
         { id: "leonardo", name: "Leonardo AI", cat: "أدوات الصور والرسم", desc: "تصميم شخصيات وصور احترافية بضغطة زر.", link: "https://leonardo.ai" },
+        { id: "midjourney", name: "Midjourney", cat: "أدوات الصور والرسم", desc: "الأقوى عالمياً في جودة الصور الفنية والسينمائية.", link: "https://midjourney.com" },
+        { id: "firefly", name: "Adobe Firefly", cat: "أدوات الصور والرسم", desc: "توليد وتعديل الصور بذكاء من أدوبي.", link: "https://firefly.adobe.com" },
+        { id: "ideo", name: "Ideogram", cat: "أدوات الصور والرسم", desc: "الأفضل في كتابة نصوص صحيحة داخل الصور.", link: "https://ideogram.ai" },
+        { id: "removebg", name: "Remove.bg", cat: "أدوات الصور والرسم", desc: "مسح خلفية أي صورة بدقة في ثانية واحدة.", link: "https://remove.bg" },
+        { id: "upscayl", name: "Upscayl", cat: "أدوات الصور والرسم", desc: "تكبير حجم الصور الضعيفة وزيادة جودتها.", link: "https://upscayl.org" },
+        { id: "lexica", name: "Lexica", cat: "أدوات الصور والرسم", desc: "محرك بحث لصور الذكاء الاصطناعي للحصول على إلهام.", link: "https://lexica.art" },
+        { id: "krea", name: "Krea AI", cat: "أدوات الصور والرسم", desc: "توليد الصور في الوقت الفعلي أثناء الرسم.", link: "https://krea.ai" },
+        { id: "playg", name: "Playground AI", cat: "أدوات الصور والرسم", desc: "منصة سهلة لتوليد وتعديل الصور مجاناً.", link: "https://playground.com" },
+        { id: "photo", name: "Photoroom", cat: "أدوات الصور والرسم", desc: "تصوير المنتجات وتغيير خلفياتها باحترافية.", link: "https://photoroom.com" },
+
+        // قسم الفيديو
         { id: "luma", name: "Luma Dream", cat: "أدوات الفيديو والأنميشن", desc: "تحويل الصور لفيديوهات سينمائية متحركة.", link: "https://lumalabs.ai" },
-        { id: "eleven", name: "ElevenLabs", cat: "أدوات الصوت والموسيقى", desc: "أفضل أداة لتحويل النص لصوت بشري واقعي.", link: "https://elevenlabs.io" }
-        // ... (ممكن تضيف باقي الأدوات هنا بنفس الطريقة)
+        { id: "runway", name: "Runway Gen-2", cat: "أدوات الفيديو والأنميشن", desc: "تحويل النصوص والصور إلى فيديو احترافي.", link: "https://runwayml.com" },
+        { id: "pika", name: "Pika Labs", cat: "أدوات الفيديو والأنميشن", desc: "تحريك أجزاء معينة من الصورة بدقة عالية.", link: "https://pika.art" },
+        { id: "heygen", name: "HeyGen", cat: "أدوات الفيديو والأنميشن", desc: "إنشاء فيديوهات بمتحدث واقعي من نص مكتوب.", link: "https://heygen.com" },
+        { id: "did", name: "D-ID", cat: "أدوات الفيديو والأنميشن", desc: "جعل الصور الثابتة تتحدث وتتحرك.", link: "https://d-id.com" },
+        { id: "capcut", name: "CapCut AI", cat: "أدوات الفيديو والأنميشن", desc: "أدوات ذكية للمونتاج وكتابة الترجمة تلقائياً.", link: "https://capcut.com" },
+        { id: "invideo", name: "InVideo", cat: "أدوات الفيديو والأنميشن", desc: "تحويل المقالات والأفكار لفيديوهات جاهزة للنشر.", link: "https://invideo.io" },
+        { id: "synthesia", name: "Synthesia", cat: "أدوات الفيديو والأنميشن", desc: "فيديوهات تقديمية بممثلين بالذكاء الاصطناعي.", link: "https://synthesia.io" },
+        { id: "kaiber", name: "Kaiber", cat: "أدوات الفيديو والأنميشن", desc: "صناعة فيديوهات أنميشن موسيقية إبداعية.", link: "https://kaiber.ai" },
+        { id: "veed", name: "Veed.io", cat: "أدوات الفيديو والأنميشن", desc: "محرر فيديو سحابي يضم أدوات ذكاء اصطناعي قوية.", link: "https://veed.io" },
+
+        // قسم الصوت
+        { id: "eleven", name: "ElevenLabs", cat: "أدوات الصوت والموسيقى", desc: "أفضل أداة لتحويل النص لصوت بشري واقعي.", link: "https://elevenlabs.io" },
+        { id: "suno", name: "Suno AI", cat: "أدوات الصوت والموسيقى", desc: "تأليف أغاني كاملة بالألحان والكلمات.", link: "https://suno.com" },
+        { id: "udio", name: "Udio", cat: "أدوات الصوت والموسيقى", desc: "منصة قوية جداً لإنتاج الموسيقى بالذكاء الاصطناعي.", link: "https://udio.com" },
+        { id: "lalal", name: "Lalal.ai", cat: "أدوات الصوت والموسيقى", desc: "فصل الصوت البشري عن الموسيقى بدقة.", link: "https://lalal.ai" },
+        { id: "murf", name: "Murf AI", cat: "أدوات الصوت والموسيقى", desc: "تعليق صوتي احترافي للفيديوهات والكتب.", link: "https://murf.ai" },
+        { id: "voice", name: "Voice.ai", cat: "أدوات الصوت والموسيقى", desc: "تغيير صوتك لأصوات مشاهير وشخصيات مختلفة.", link: "https://voice.ai" },
+        { id: "soundraw", name: "Soundraw", cat: "أدوات الصوت والموسيقى", desc: "تأليف موسيقى خلفية للفيديوهات بدون حقوق.", link: "https://soundraw.io" },
+        { id: "otter", name: "Otter.ai", cat: "أدوات الصوت والموسيقى", desc: "تسجيل الاجتماعات وتحويل الصوت إلى نص.", link: "https://otter.ai" },
+        { id: "descript", name: "Descript", cat: "أدوات الصوت والموسيقى", desc: "تعديل الصوت والفيديو عن طريق تعديل النص.", link: "https://descript.com" },
+        { id: "adobe", name: "Adobe Podcast", cat: "أدوات الصوت والموسيقى", desc: "تنقية الصوت العادي لجعله كأنه مسجل في استوديو.", link: "https://podcast.adobe.com" },
+
+        // قسم الـ 3D
+        { id: "macaron", name: "Macaron AI", cat: "أدوات 3D والتصميم", desc: "تحويل الصور لنماذج 3D لاستخدامها في الألعاب.", link: "https://macaron.app" },
+        { id: "meshy", name: "Meshy", cat: "أدوات 3D والتصميم", desc: "توليد نماذج ثلاثية الأبعاد من النصوص.", link: "https://meshy.ai" },
+        { id: "spline", name: "Spline", cat: "أدوات 3D والتصميم", desc: "تصميم مجسمات 3D تفاعلية مباشرة على المتصفح.", link: "https://spline.design" },
+        { id: "skybox", name: "Skybox Lab", cat: "أدوات 3D والتصميم", desc: "توليد بيئات وعوالم 360 درجة بضغطة زر.", link: "https://blockadelabs.com" },
+        { id: "canva", name: "Canva Magic", cat: "أدوات 3D والتصميم", desc: "أدوات الذكاء الاصطناعي من كانفا للتصميم الشامل.", link: "https://canva.com" },
+        { id: "looka", name: "Looka", cat: "أدوات 3D والتصميم", desc: "تصميم لوجو (شعار) احترافي لمشروعك.", link: "https://looka.com" },
+        { id: "brand", name: "Brandmark", cat: "أدوات 3D والتصميم", desc: "بناء هوية بصرية كاملة للشركات.", link: "https://brandmark.io" },
+        { id: "gamma", name: "Gamma", cat: "أدوات 3D والتصميم", desc: "إنشاء عروض تقديمية (PowerPoint) ذكية في ثواني.", link: "https://gamma.app" },
+        { id: "tome", name: "Tome", cat: "أدوات 3D والتصميم", desc: "بناء قصص وعروض تفاعلية باستخدام الذكاء الاصطناعي.", link: "https://tome.app" },
+        { id: "beautiful", name: "Beautiful.ai", cat: "أدوات 3D والتصميم", desc: "تصميم شرائح عرض احترافية أوتوماتيكياً.", link: "https://beautiful.ai" }
     ];
 
-    // وظيفة عداد الزوار (باستخدام API مجاني بسيط)
-    async function getVisitorCount() {
+    async function fetchStats() {
         try {
-            // ملاحظة: دي خدمة مجانية للعدادات، لو توقفت في أي وقت الرقم هيختفي بس الموقع هيفضل شغال
-            const response = await fetch('https://api.countapi.xyz/hit/salahmekkawey-ai/visits');
-            const data = await response.json();
-            document.getElementById('totalVisits').innerText = data.value;
-        } catch (e) {
-            document.getElementById('totalVisits').innerText = "1,240+"; // رقم احتياطي لو السيرفر وقع
-        }
+            const res = await fetch('https://api.countapi.xyz/hit/salahmekkawey-ai/visits');
+            const data = await res.json();
+            document.getElementById('totalVisits').innerText = data.value.toLocaleString();
+        } catch (e) { document.getElementById('totalVisits').innerText = "1,250+"; }
     }
 
-    // وظيفة عداد الضغطات لكل لينك
-    function trackClick(toolId) {
-        // بنسجل الضغطة في المتصفح حالياً (Local Storage)
-        let count = localStorage.getItem('click_' + toolId) || 0;
-        count++;
-        localStorage.setItem('click_' + toolId, count);
-        renderTools(document.getElementById('mainSearch').value.toLowerCase());
+    function track(id) {
+        let n = parseInt(localStorage.getItem('c_'+id) || 0) + 1;
+        localStorage.setItem('c_'+id, n);
+        render(document.getElementById('mainSearch').value.toLowerCase());
     }
 
-    function renderTools(filterText = "") {
-        const contentDisplay = document.getElementById('contentDisplay');
-        const categories = [...new Set(allTools.map(t => t.cat))];
-        contentDisplay.innerHTML = ""; 
-
-        categories.forEach(category => {
-            const filteredTools = allTools.filter(tool => 
-                tool.cat === category && 
-                (tool.name.toLowerCase().includes(filterText) || tool.desc.includes(filterText))
-            );
-            if (filteredTools.length > 0) {
-                contentDisplay.innerHTML += `<div class="category-title">${category}</div>`;
-                let gridHTML = `<div class="tools-grid">`;
-                filteredTools.forEach(tool => {
-                    let clicks = localStorage.getItem('click_' + tool.id) || 0;
-                    gridHTML += `
-                        <div class="card">
-                            <span class="click-count">🔥 ${clicks} مهتمين</span>
-                            <h3>${tool.name}</h3>
-                            <p>${tool.desc}</p>
-                            <a href="${tool.link}" target="_blank" class="btn" onclick="trackClick('${tool.id}')">اذهب للموقع</a>
-                        </div>
-                    `;
-                });
-                gridHTML += `</div>`;
-                contentDisplay.innerHTML += gridHTML;
+    function render(f = "") {
+        const out = document.getElementById('contentDisplay');
+        const cats = ["أدوات النصوص والبرمجة", "أدوات الصور والرسم", "أدوات الفيديو والأنميشن", "أدوات الصوت والموسيقى", "أدوات 3D والتصميم"];
+        out.innerHTML = "";
+        cats.forEach(c => {
+            const tools = allTools.filter(t => t.cat === c && (t.name.toLowerCase().includes(f) || t.desc.includes(f)));
+            if (tools.length > 0) {
+                out.innerHTML += `<div class="category-header">${c}</div><div class="grid">` + 
+                tools.map(t => {
+                    let clicks = localStorage.getItem('c_'+t.id) || 0;
+                    return `
+                    <div class="tool-card">
+                        <span class="stat-badge"><i class="fas fa-fire"></i> ${clicks} مهتم</span>
+                        <h3>${t.name}</h3>
+                        <p>${t.desc}</p>
+                        <a href="${t.link}" target="_blank" class="visit-btn" onclick="track('${t.id}')">اكتشف الآن</a>
+                    </div>`;
+                }).join('') + `</div>`;
             }
         });
     }
 
-    document.getElementById('mainSearch').addEventListener('input', (e) => renderTools(e.target.value.toLowerCase()));
-    
-    // تشغيل العدادات عند الفتح
-    getVisitorCount();
-    renderTools();
+    document.getElementById('mainSearch').addEventListener('input', e => render(e.target.value.toLowerCase()));
+    fetchStats(); render();
 </script>
-
 </body>
 </html>
