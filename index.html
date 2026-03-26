@@ -5,186 +5,216 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salah Mekkawey - Ultimate Hub</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#7c3aed">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0b0f1a; --card-bg: rgba(20, 26, 42, 0.9); --nav-bg: rgba(0,0,0,0.4);
-            --accent: #7c3aed; --neon: #00f2ff; --text: #e2e8f0; --soccer: #10b981; --red: #f43f5e;
-            --wa: #25d366;
+            --bg: #0b0f1a; --card-bg: rgba(20, 26, 42, 0.9);
+            --accent: #7c3aed; --neon: #00f2ff; --text: #e2e8f0; --red: #f43f5e; --green: #25d366;
         }
         body.light-mode {
-            --bg: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.95); --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.95);
             --text: #0f172a; --accent: #6d28d9; --neon: #7c3aed;
         }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; transition: 0.3s; overflow-x: hidden; }
         
+        /* شريط الأخبار الرياضي */
+        .news-ticker { background: rgba(0,0,0,0.4); color: var(--neon); padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 1px solid var(--accent); position: relative; z-index: 10; }
+        .ticker-content { display: inline-block; animation: ticker 30s linear infinite; font-weight: bold; font-size: 14px; }
+        @keyframes ticker { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
         .header { text-align: center; padding: 20px; position: relative; }
-        .top-controls { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 1001; }
+        .top-controls { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; }
         .theme-toggle { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); color: var(--text); padding: 10px; border-radius: 50%; cursor: pointer; width: 40px; height: 40px; }
 
-        .status-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 10px; }
-        #digitalClock { font-size: 35px; font-weight: bold; color: var(--neon); text-shadow: 0 0 10px var(--accent); }
-        .weather-box { background: var(--card-bg); padding: 8px 15px; border-radius: 50px; border: 1px solid var(--neon); display: flex; align-items: center; gap: 8px; font-size: 14px; }
-        .weather-box select { background: none; border: none; color: var(--text); cursor: pointer; outline: none; font-weight: bold; }
+        /* الساعة والطقس */
+        #digitalClock { font-size: 45px; font-weight: bold; color: var(--neon); text-shadow: 0 0 15px var(--accent); margin: 10px 0; font-family: 'Courier New', monospace; }
+        .status-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .status-item { background: var(--card-bg); padding: 8px 15px; border-radius: 50px; border: 1px solid var(--neon); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .status-item select { background: none; border: none; color: var(--text); cursor: pointer; outline: none; font-weight: bold; }
 
-        .wisdom-strip { max-width: 600px; margin: 0 auto 15px; background: rgba(124, 58, 237, 0.1); padding: 10px; border-radius: 50px; border: 1px dashed var(--accent); font-size: 13px; font-style: italic; text-align: center; }
+        .wisdom-strip { max-width: 650px; margin: 0 auto 20px; background: rgba(124, 58, 237, 0.1); padding: 12px; border-radius: 50px; border: 1px dashed var(--accent); font-size: 14px; font-style: italic; text-align: center; }
 
-        .main-logo { width: 65px; height: 65px; margin-bottom: 5px; filter: drop-shadow(0 0 15px var(--neon)); animation: float 3s infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-        .action-btns { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .btn-top { border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; font-size: 13px; display: flex; align-items: center; gap: 6px; }
-        .install-btn { background: linear-gradient(45deg, #7c3aed, #00f2ff); }
-        .share-btn { background: linear-gradient(45deg, #00c6ff, #0072ff); }
-        .contact-btn { background: linear-gradient(45deg, #25d366, #128c7e); }
-
-        .promo-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 0 20px; max-width: 1100px; margin: 0 auto 25px; }
-        .promo-card { background: var(--card-bg); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
-        .promo-card h4 { margin: 0 0 10px; font-size: 12px; color: var(--neon); text-transform: uppercase; }
-        .video-box { border-radius: 12px; overflow: hidden; height: 160px; background: #000; }
-        
-        /* العداد التلقائي */
-        .countdown { display: flex; justify-content: center; gap: 8px; font-weight: bold; font-size: 20px; color: var(--red); margin-top: 10px; }
-        .countdown span { background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 8px; }
-
-        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; padding: 20px; max-width: 900px; margin: 0 auto; }
-        .folder-card { background: var(--card-bg); border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
-        .folder-card:hover { transform: translateY(-5px); border-color: var(--neon); }
+        /* الأقسام الرئيسية */
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 15px; padding: 20px; max-width: 950px; margin: 0 auto; }
+        .folder-card { background: var(--card-bg); border-radius: 25px; padding: 25px 10px; text-align: center; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
+        .folder-card:hover { transform: translateY(-8px); border-color: var(--neon); box-shadow: 0 5px 20px rgba(0,242,255,0.2); }
         .folder-card i { font-size: 35px; color: var(--neon); margin-bottom: 12px; display: block; }
+        .folder-card span { font-weight: bold; font-size: 14px; }
 
+        /* واجهة الصلاة والقرآن */
+        .islamic-view { display: none; padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+        .prayer-card { background: linear-gradient(135deg, var(--accent), #1e1b4b); padding: 25px; border-radius: 25px; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .prayer-card h3 { margin: 0; opacity: 0.8; font-size: 18px; }
+        .prayer-card .time-now { font-size: 35px; font-weight: bold; color: var(--neon); margin: 10px 0; }
+        
+        .quran-section { background: var(--card-bg); padding: 25px; border-radius: 25px; border: 1px solid var(--green); }
+        .quran-section select { width: 100%; padding: 15px; border-radius: 12px; background: #000; color: white; border: 1px solid var(--green); margin-bottom: 20px; font-size: 16px; }
+        audio { width: 100%; filter: hue-rotate(80deg); }
+
+        /* عرض الأدوات والأذكار */
         #toolsView { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .back-nav { color: var(--neon); cursor: pointer; font-weight: bold; margin-bottom: 25px; display: inline-block; font-size: 18px; }
-        .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .item-card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
-        .btn-action { background: var(--accent); color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 16px; }
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .item-card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .item-card h3 { color: var(--neon); margin: 0 0 10px; font-size: 20px; }
+        .item-card p { font-size: 14px; color: #cbd5e1; line-height: 1.6; }
+        
+        .btn-link { background: var(--accent); color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 15px; text-decoration: none; display: block; text-align: center; }
 
-        .footer { text-align: center; padding: 50px 20px; opacity: 0.6; font-size: 13px; font-weight: bold; border-top: 1px solid rgba(255,255,255,0.05); }
+        .action-btns { display: flex; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+        .btn-round { border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; color: white; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .inst-btn { background: linear-gradient(45deg, #7c3aed, #00f2ff); }
+        .wa-btn { background: #25d366; }
+
+        .footer { text-align: center; padding: 50px; opacity: 0.5; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body id="body">
+
+<div class="news-ticker">
+    <div class="ticker-content">
+        ⚽ البرازيل (0) - الأرجنتين (1) • مصر تلاقي كوت ديفوار اليوم 7 م • الأهلي والزمالك في انتظار القمة • ريال مدريد يتصدر الليجا • ليفربول يكتسح في البريميرليج ⚽
+    </div>
+</div>
 
 <div class="header">
     <div class="top-controls">
         <div class="theme-toggle" onclick="toggleTheme()"><i id="themeIcon" class="fas fa-moon"></i></div>
     </div>
-    <div class="status-bar">
-        <div id="digitalClock">00:00:00</div>
-        <div class="weather-box">
+    
+    <div id="digitalClock">00:00:00</div>
+    
+    <div class="status-row">
+        <div class="status-item">
             <i class="fas fa-cloud-sun"></i>
-            <select id="weatherSelect">
+            <select>
                 <option>المنيا 24°C</option><option>القاهرة 27°C</option><option>الإسكندرية 21°C</option><option>أسوان 32°C</option>
             </select>
         </div>
     </div>
-    <div class="wisdom-strip" id="wisdom">"الأمل يصنع المعجزات.. ابدأ الآن."</div>
-    <svg class="main-logo" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45" stroke="var(--accent)" stroke-width="4" fill="none" />
-        <path d="M35 50 L45 60 L65 40" stroke="var(--neon)" stroke-width="8" stroke-linecap="round" fill="none" />
-    </svg>
-    <h1 style="margin:0;">Salah Mekkawey</h1>
+
+    <div class="wisdom-strip" id="wisdom">"جاري تحميل حكمة اليوم..."</div>
+    
+    <h1 style="margin: 0 0 10px 0;">Salah Mekkawey</h1>
+
     <div class="action-btns">
-        <button class="btn-top install-btn" id="installBtn"><i class="fas fa-download"></i> Install</button>
-        <button class="btn-top share-btn" onclick="shareSite()"><i class="fas fa-share-alt"></i> Share</button>
-        <button class="btn-top contact-btn" onclick="window.open('https://wa.me/201026402446', '_blank')"><i class="fab fa-whatsapp"></i> Contact Me</button>
+        <button class="btn-round inst-btn" id="installBtn"><i class="fas fa-download"></i> Install App</button>
+        <button class="btn-round wa-btn" onclick="window.open('https://wa.me/201026402446', '_blank')"><i class="fab fa-whatsapp"></i> تواصل معي</button>
     </div>
 </div>
 
 <div id="homeUI">
-    <div class="promo-area">
-        <div class="promo-card">
-            <h4><i class="fab fa-youtube"></i> Latest Video</h4>
-            <div class="video-box"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe></div>
-        </div>
-        <div class="promo-card">
-            <h4><i class="fab fa-tiktok"></i> TikTok Feed</h4>
-            <div class="video-box"><iframe width="100%" height="100%" src="https://www.tiktok.com/player/v1/7345678901234567890" frameborder="0" allowfullscreen></iframe></div>
-        </div>
-        <div class="promo-card">
-            <h4 id="matchTitle"><i class="fas fa-stopwatch"></i> أقرب مباراة هامة</h4>
-            <div class="countdown" id="timer">
-                <span id="d">00</span>:<span id="h">00</span>:<span id="m">00</span>
-            </div>
-            <p style="font-size: 11px; margin-top: 10px; color: var(--red); font-weight: bold;" id="matchInfo">جاري تحميل ميعاد اللقاء...</p>
-        </div>
-    </div>
     <div class="categories-grid">
+        <div class="folder-card" onclick="openIslamic()"><i class="fas fa-kaaba"></i><span>نور الإيمان</span></div>
+        <div class="folder-card" onclick="openCat('azkar')"><i class="fas fa-pray"></i><span>أذكار وأدعية</span></div>
         <div class="folder-card" onclick="openCat('social')"><i class="fas fa-share-alt"></i><span>قنواتي</span></div>
         <div class="folder-card" onclick="openCat('ai')"><i class="fas fa-robot"></i><span>ذكاء اصطناعي</span></div>
         <div class="folder-card" onclick="openCat('prompts')"><i class="fas fa-magic"></i><span>الأوامر</span></div>
         <div class="folder-card" onclick="openCat('sports')"><i class="fas fa-futbol"></i><span>الرياضة</span></div>
         <div class="folder-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>الأخبار</span></div>
-        <div class="folder-card" onclick="openCat('soft')"><i class="fas fa-desktop"></i><span>البرامج</span></div>
+    </div>
+</div>
+
+<div class="islamic-view" id="islamicView">
+    <div class="back-nav" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</div>
+    <div class="prayer-card">
+        <h3 id="pName">باقي على صلاة العصر</h3>
+        <div class="time-now" id="pTimer">00:00:00</div>
+    </div>
+    <div class="quran-section">
+        <h4 style="margin-top:0; color:var(--green);"><i class="fas fa-microphone"></i> القرآن الكريم:</h4>
+        <select id="quranSelect" onchange="playQuran()">
+            <option value="">-- اختر قارئ --</option>
+            <option value="https://server7.mp3quran.net/s_gmd/001.mp3">سعد الغامدي</option>
+            <option value="https://server10.mp3quran.net/minsh/001.mp3">محمد صديق المنشاوي</option>
+            <option value="https://server10.mp3quran.net/ajm/001.mp3">أحمد العجمي</option>
+            <option value="https://server7.mp3quran.net/basit/001.mp3">عبد الباسط عبد الصمد</option>
+            <option value="https://server8.mp3quran.net/afs/001.mp3">مشاري راشد العفاسي</option>
+        </select>
+        <audio id="qPlayer" controls></audio>
     </div>
 </div>
 
 <div id="toolsView">
     <div class="back-nav" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</div>
-    <h2 id="viewTitle" style="text-align: center; color: var(--neon); margin-bottom: 25px;"></h2>
     <div class="items-grid" id="itemsGrid"></div>
 </div>
 
-<div class="footer">© 2026 Salah Mekkawey | Animation & Tech Empire</div>
+<div class="footer">© 2026 Salah Mekkawey | The Ultimate Hub</div>
 
 <script>
     if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
 
-    function updateClock() { document.getElementById('digitalClock').innerText = new Date().toLocaleTimeString('ar-EG'); }
-    setInterval(updateClock, 1000); updateClock();
+    function updateTime() { document.getElementById('digitalClock').innerText = new Date().toLocaleTimeString('ar-EG'); }
+    setInterval(updateTime, 1000); updateTime();
+
+    function setWisdom() {
+        const w = [
+            "أصبحنا وأصبح الملك لله والحمد لله.",
+            "لا حول ولا قوة إلا بالله العلي العظيم.",
+            "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت.",
+            "سبحان الله وبحمده، سبحان الله العظيم.",
+            "إبداعك اليوم هو صدقة جارية لغدك."
+        ];
+        document.getElementById('wisdom').innerText = `"${w[Math.floor(Math.random()*w.length)]}"`;
+    }
+    setWisdom();
+
+    function updatePrayer() {
+        const now = new Date();
+        const target = new Date(); target.setHours(15, 45, 0); 
+        const diff = target - now;
+        if (diff > 0) {
+            const h = Math.floor(diff/3600000); const m = Math.floor((diff%3600000)/60000); const s = Math.floor((diff%60000)/1000);
+            document.getElementById('pTimer').innerText = `${h}:${m}:${s}`;
+        } else {
+            document.getElementById('pName').innerText = "باقي على صلاة المغرب";
+            document.getElementById('pTimer').innerText = "03:15:00";
+        }
+    }
+    setInterval(updatePrayer, 1000);
 
     const data = [
-        { cat:'social', name:'YouTube', desc:'قناتي للأنميشن والرياضة.', link:'https://youtube.com/@SalahMekkawey' },
-        { cat:'sports', name:'جدول مباريات اليوم', desc:'اعرف كل الماتشات والنتائج لحظة بلحظة.', link:'https://www.365scores.com/ar/football' },
-        { cat:'sports', name:'Yacine TV', desc:'البث المباشر للمباريات.', link:'https://yacineapp.tv/' },
-        { cat:'ai', name:'ChatGPT', desc:'مساعد نصوص وبرمجة.', link:'https://chat.openai.com' },
-        { cat:'ai', name:'Leonardo AI', desc:'تصميم صور كرتونية.', link:'https://leonardo.ai' },
-        { cat:'prompts', name:'Pixar Avatar', copy:'3D Pixar style character, young man, glowing eyes, cinematic lighting, 8k.', desc:'لعمل صورة شخصية كرتونية.' }
+        { cat:'azkar', name:'أذكار الصباح', desc:'"أصبحنا وأصبح الملك لله.." - اقرأ أذكار الصباح لتحفظك يومك.' },
+        { cat:'azkar', name:'أذكار المساء', desc:'"أمسينا وأمسى الملك لله.." - أذكار المساء تجلب الطمأنينة لقلبك.' },
+        { cat:'azkar', name:'دعاء الاستخارة', desc:'اللهم إني أستخيرك بعلمك وأستقدرك بقدرتك..' },
+        { cat:'azkar', name:'سيد الاستغفار', desc:'اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك..' },
+        
+        { cat:'social', name:'YouTube', link:'https://youtube.com/@SalahMekkawey', desc:'قناتي الرسمية للأنميشن والرياضة.' },
+        { cat:'sports', name:'جدول مباريات اليوم', link:'https://www.365scores.com/ar/football', desc:'نتائج ومواعيد لحظة بلحظة.' },
+        { cat:'ai', name:'ChatGPT', link:'https://chat.openai.com', desc:'مساعد نصوص وبرمجة.' },
+        { cat:'prompts', name:'Pixar Style', copy:'3D Pixar style character, glowing eyes, 8k.', desc:'لعمل صور كرتونية.' }
     ];
-    for(let i=1; i<=48; i++) { data.push({ cat:'ai', name:'AI Tool '+i, desc:'أداة ذكاء اصطناعي إضافية رقم '+i, link:'#' }); }
+    for(let i=1; i<=48; i++) { data.push({ cat:'ai', name:'AI Tool '+i, desc:'أداة ذكاء اصطناعي إضافية '+i, link:'#' }); }
+
+    function openIslamic() { document.getElementById('homeUI').style.display='none'; document.getElementById('islamicView').style.display='block'; }
+    function playQuran() { const url = document.getElementById('quranSelect').value; const p = document.getElementById('qPlayer'); if(url){ p.src=url; p.play(); } }
 
     function openCat(c) {
-        document.getElementById('homeUI').style.display = 'none';
+        document.getElementById('homeUI').style.display='none';
         const grid = document.getElementById('itemsGrid');
         grid.innerHTML = data.filter(i => i.cat === c).map(i => `
             <div class="item-card">
-                ${i.copy ? `<span style="position:absolute;top:10px;left:10px;background:var(--wa);padding:4px;border-radius:5px;font-size:10px;cursor:pointer;" onclick="copyP('${i.copy}')">نسخ</span>` : ''}
+                ${i.copy ? `<button style="position:absolute;top:15px;left:15px;background:var(--green);border:none;color:white;padding:5px;border-radius:5px;font-size:10px;cursor:pointer;" onclick="copyP('${i.copy}')">نسخ</button>` : ''}
                 <h3>${i.name}</h3><p>${i.desc}</p>
-                ${i.link ? `<button class="btn-action" onclick="window.open('${i.link}', '_blank')">دخول</button>` : ''}
+                ${i.link ? `<a href="${i.link}" target="_blank" class="btn-link">دخول</a>` : ''}
             </div>
         `).join('');
-        document.getElementById('toolsView').style.display = 'block';
+        document.getElementById('toolsView').style.display='block';
     }
 
-    function goHome() { document.getElementById('toolsView').style.display = 'none'; document.getElementById('homeUI').style.display = 'block'; }
-    function toggleTheme() { document.body.classList.toggle('light-mode'); }
+    function goHome() { 
+        document.getElementById('toolsView').style.display='none'; 
+        document.getElementById('islamicView').style.display='none'; 
+        document.getElementById('homeUI').style.display='block'; 
+        document.getElementById('qPlayer').pause();
+    }
+
     function copyP(t) { navigator.clipboard.writeText(t); alert('تم النسخ!'); }
-
-    function initTimer() {
-        // مصفوفة مباريات (تقدر تضيف ماتشات تانية هنا وهيختار الأقرب أوتوماتيك)
-        const matches = [
-            { name: "ماتش مهم (دوري أبطال إفريقيا)", date: "April 10, 2026 21:00:00" },
-            { name: "ماتش المنتخب القادم", date: "June 05, 2026 20:00:00" }
-        ];
-        
-        const now = new Date().getTime();
-        const nextMatch = matches.find(m => new Date(m.date).getTime() > now) || matches[0];
-        const target = new Date(nextMatch.date).getTime();
-        
-        document.getElementById('matchInfo').innerText = nextMatch.name;
-
-        setInterval(() => {
-            const d = target - new Date().getTime();
-            document.getElementById('d').innerText = Math.floor(d / (1000 * 60 * 60 * 24));
-            document.getElementById('h').innerText = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('m').innerText = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
-        }, 1000);
-    }
-    initTimer();
-
-    function shareSite() {
-        if (navigator.share) { navigator.share({ title: 'Salah Mekkawey Hub', url: window.location.href }); } 
-        else { window.open(`https://wa.me/?text=تطبيق صلاح مكاوي: ${window.location.href}`, '_blank'); }
-    }
+    function toggleTheme() { document.body.classList.toggle('light-mode'); }
+    
+    let defP; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defP = e; });
+    document.getElementById('installBtn').onclick = () => { if(defP) defP.prompt(); else alert('افتح القائمة واختار Install App'); };
 </script>
 </body>
 </html>
