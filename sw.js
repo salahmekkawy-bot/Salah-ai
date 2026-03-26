@@ -1,14 +1,31 @@
+const cacheName = 'salah-hub-v3';
+
 self.addEventListener('install', (e) => {
+  self.skipWaiting();
   e.waitUntil(
-    caches.open('salah-hub-v1').then((cache) => cache.addAll([
-      './',
-      './index.html'
-    ]))
+    caches.open(cacheName).then((cache) => {
+      return cache.addAll(['./', './index.html']);
+    })
   );
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keyList) => {
+      return Promise.all(keyList.map((key) => {
+        if (key !== cacheName) {
+          return caches.delete(key);
+        }
+      }));
+    })
+  );
+  return self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request))
+    caches.match(e.request).then((res) => {
+      return res || fetch(e.request);
+    })
   );
 });
