@@ -1,10 +1,17 @@
-const cacheName = 'salah-hub-v5';
+const cacheName = 'salah-hub-v6';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
-      return cache.addAll(['./', './index.html', './manifest.json']);
+      // تحميل الملفات الأساسية عشان يشتغل بدون نت
+      return cache.addAll([
+        './',
+        './index.html',
+        './manifest.json',
+        './icon-192.png',
+        './icon-512.png'
+      ]);
     })
   );
 });
