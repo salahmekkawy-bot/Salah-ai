@@ -1,19 +1,19 @@
 {
-  "name": "Salah Mekkawey Hub",
-  "short_name": "SalahHub",
-  "start_url": ".",
+  "name": "Salah Mekkawey Premium Hub",
+  "short_name": "SM Hub",
+  "description": "المنصة الرسمية لصانع المحتوى صلاح مكاوي",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0b0f1a",
-  "theme_color": "#7c3aed",
-  "description": "The ultimate AI and Sports dashboard by Salah Mekkawey",
+  "background_color": "#0b132b",
+  "theme_color": "#f5b921",
   "icons": [
     {
-      "src": "https://via.placeholder.com/192x192/7c3aed/ffffff?text=S",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://via.placeholder.com/512x512/7c3aed/ffffff?text=Salah",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
