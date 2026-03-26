@@ -20,8 +20,6 @@
             --text: #ffffff;
             --text-muted: #94a3b8;
             --green: #25d366;
-            --red: #f43f5e;
-            --accent: #7c3aed;
         }
 
         body.light-mode {
@@ -90,7 +88,6 @@
         .subha-btn { background: var(--gold); color: #000; border: none; padding: 0; border-radius: 50%; width: 110px; height: 110px; font-size: 26px; cursor: pointer; box-shadow: 0 10px 30px var(--gold-glow); font-weight: 900; transition: 0.2s; }
         .subha-btn:active { transform: scale(0.95); }
         .subha-reset { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); padding: 8px 20px; border-radius: 50px; cursor: pointer; margin-top: 25px; font-weight: bold; transition: 0.3s; }
-        .subha-reset:hover { background: rgba(255,255,255,0.1); color: var(--text); }
         
         .quran-section { padding: 30px; }
         .quran-section select { width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.2); color: var(--text); border: 1px solid var(--glass-border); margin-bottom: 20px; font-size: 16px; outline: none; }
@@ -213,12 +210,33 @@
 </div>
 
 <script>
-    // --- كود التحديث وحل مشكلة كروم العادي ---
+    // --- كود التحديث وتفعيل زر التثبيت ---
     if ('serviceWorker' in navigator) { 
-        navigator.serviceWorker.register('sw.js').then(reg => {
-            reg.update(); // يجبر المتصفح يسحب النسخة الجديدة
-        }); 
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').then(reg => {
+                reg.update(); 
+            });
+        });
     }
+
+    // تفعيل زر التثبيت 
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                deferredPrompt = null;
+            }
+        } else {
+            alert('للتثبيت: اضغط على الـ 3 نقط فوق واختار "الإضافة للشاشة الرئيسية" أو "Install App"');
+        }
+    });
 
     function updateTime() { 
         const now = new Date();
@@ -305,17 +323,15 @@
             document.getElementById('islamicView').style.display = 'none';
             document.getElementById('toolsView').style.display = 'block';
             
-            // إظهار شريط البحث فقط في مكتبة الأوامر
             const searchBar = document.getElementById('searchPrompts');
             searchBar.style.display = (s === 'prompts') ? 'block' : 'none';
-            searchBar.value = ''; // تصفير البحث
+            searchBar.value = ''; 
             
             renderItems(s, '');
         }
         window.scrollTo(0,0);
     }
 
-    // دالة لعرض العناصر مع ميزة البحث
     function renderItems(category, searchQuery) {
         const grid = document.getElementById('itemsGrid');
         const filteredData = data.filter(i => {
@@ -334,7 +350,6 @@
         `).join('');
     }
 
-    // فلترة الأوامر عند الكتابة في شريط البحث
     function filterPrompts() {
         const query = document.getElementById('searchPrompts').value;
         renderItems('prompts', query);
@@ -349,16 +364,13 @@
         document.getElementById('qPlayer').pause();
     }
 
-    function copyP(t) { navigator.clipboard.writeText(t); alert('تم نسخ الأمر بنجاح! روح حطه في ChatGPT أو Midjourney.'); }
+    function copyP(t) { navigator.clipboard.writeText(t); alert('تم نسخ الأمر بنجاح!'); }
     
     function toggleTheme() { 
         document.body.classList.toggle('light-mode'); 
         const isLight = document.body.classList.contains('light-mode');
         document.getElementById('themeIcon').className = isLight ? 'fas fa-sun' : 'fas fa-moon';
     }
-    
-    let defP; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defP = e; });
-    document.getElementById('installBtn').onclick = () => { if(defP) defP.prompt(); else alert('للتثبيت: افتح إعدادات المتصفح واختار Install App'); };
     
     function shareSite() {
         if (navigator.share) { navigator.share({ title: 'Salah Mekkawey Hub', url: window.location.href }); } 
