@@ -203,3 +203,34 @@
 </script>
 </body>
 </html>
+<script>
+    let deferredPrompt;
+    const installBtn = document.querySelector('.upload-btn');
+
+    // كود صيد عملية التثبيت
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // إظهار الزرار للزائر
+        installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            }
+            deferredPrompt = null;
+        } else {
+            // لو المتصفح لسه مش جاهز، عرفه الطريقة اليدوية
+            alert('لتثبيت التطبيق: اضغط على الثلاث نقاط أعلى المتصفح ثم اختر Add to Home Screen');
+        }
+    });
+
+    // تسجيل الـ Service Worker (مهم جداً للأيقونة)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+</script>
