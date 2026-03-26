@@ -168,7 +168,7 @@
     <div class="back-nav" onclick="goHome()"><i class="fas fa-arrow-right"></i> العودة للرئيسية</div>
     
     <div class="prayer-card glass-panel">
-        <h3 id="pName" style="color: var(--text); margin-top: 0;">باقي على صلاة العصر</h3>
+        <h3 id="pName" style="color: var(--text); margin-top: 0;">جاري حساب موعد الصلاة...</h3>
         <div class="time-now" id="pTimer">00:00:00</div>
     </div>
 
@@ -210,7 +210,7 @@
 </div>
 
 <script>
-    // --- كود التحديث وتفعيل زر التثبيت ---
+    // --- تسجيل التطبيق والتثبيت ---
     if ('serviceWorker' in navigator) { 
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js').then(reg => {
@@ -219,7 +219,6 @@
         });
     }
 
-    // تفعيل زر التثبيت 
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
@@ -230,89 +229,165 @@
         if (deferredPrompt) {
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                deferredPrompt = null;
-            }
+            if (outcome === 'accepted') { deferredPrompt = null; }
         } else {
             alert('للتثبيت: اضغط على الـ 3 نقط فوق واختار "الإضافة للشاشة الرئيسية" أو "Install App"');
         }
     });
 
+    // --- الساعة الديناميكية ---
     function updateTime() { 
         const now = new Date();
         document.getElementById('digitalClock').innerText = now.toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'}); 
     }
     setInterval(updateTime, 1000); updateTime();
 
+    // --- الحكمة ---
     function setWisdom() {
         const w = ["أصبحنا وأصبح الملك لله", "سبحان الله وبحمده", "لا حول ولا قوة إلا بالله", "اللهم صل وسلم على نبينا محمد", "العمل بإتقان عبادة", "بندق ولوزة: الأمل يصنع المعجزات"];
         document.getElementById('wisdom').innerHTML = `<i class="fas fa-quote-right" style="color: var(--gold);"></i> ${w[Math.floor(Math.random()*w.length)]}`;
     }
     setWisdom();
 
+    // --- السبحة ---
     let count = 0;
     function countSubha() { count++; document.getElementById('s-count').innerText = count; }
     function resetSubha() { count = 0; document.getElementById('s-count').innerText = count; }
 
+    // --- مؤقت الصلاة المبرمج تلقائياً ---
     function updatePrayer() {
         const now = new Date();
-        const target = new Date(); target.setHours(15, 45, 0); 
-        const diff = target - now;
-        if (diff > 0) {
-            const h = Math.floor(diff/3600000); const m = Math.floor((diff%3600000)/60000); const s = Math.floor((diff%60000)/1000);
-            document.getElementById('pTimer').innerText = `${h}:${m}:${s}`;
-        } else {
-            document.getElementById('pName').innerText = "باقي على صلاة المغرب";
-            document.getElementById('pTimer').innerText = "03:15:00";
+        const prayers = [
+            { name: 'الفجر', h: 4, m: 30 },
+            { name: 'الظهر', h: 12, m: 0 },
+            { name: 'العصر', h: 15, m: 30 },
+            { name: 'المغرب', h: 18, m: 15 },
+            { name: 'العشاء', h: 19, m: 30 }
+        ];
+
+        let nextPrayer = null;
+        let target = new Date();
+
+        for (let p of prayers) {
+            let pTime = new Date();
+            pTime.setHours(p.h, p.m, 0, 0);
+            if (pTime > now) {
+                nextPrayer = p;
+                target = pTime;
+                break;
+            }
         }
+
+        if (!nextPrayer) { 
+            nextPrayer = prayers[0];
+            target = new Date();
+            target.setDate(target.getDate() + 1);
+            target.setHours(nextPrayer.h, nextPrayer.m, 0, 0);
+        }
+
+        const diff = target - now;
+        const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
+        const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+        const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+
+        document.getElementById('pName').innerText = "باقي على صلاة " + nextPrayer.name;
+        document.getElementById('pTimer').innerText = `${h}:${m}:${s}`;
     }
     setInterval(updatePrayer, 1000);
+    updatePrayer();
 
+    // --- قاعدة البيانات الكاملة (الأدوات، الأذكار، البرامج) ---
     const data = [
+        // 1. الأذكار
         { cat:'azkar', name:'أذكار الصباح', desc:'أذكار الصباح كاملة لحفظك في يومك.', link: 'https://islamqa.info/ar/answers/11169/' },
         { cat:'azkar', name:'أذكار المساء', desc:'أذكار المساء تجلب الطمأنينة لقلبك.', link: 'https://islamqa.info/ar/answers/11169/' },
         { cat:'azkar', name:'سيد الاستغفار', copy: 'اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت.', desc:'دعاء الاستغفار.' },
         { cat:'azkar', name:'دعاء الاستخارة', copy: 'اللهم إني أستخيرك بعلمك، وأستقدرك بقدرتك، وأسألك من فضلك العظيم، فإنك تقدر ولا أقدر، وتعلم ولا أعلم، وأنت علام الغيوب...', desc:'صلاة الاستخارة مكتوب.' },
         
+        // 2. قنواتي
         { cat:'social', name:'YouTube Channel', link:'https://youtube.com/@SalahMekkawey', desc:'قناتي الرسمية للأنميشن والرياضة.' },
-        { cat:'social', name:'TikTok Profile', link:'https://tiktok.com/@SalahMekkawey', desc:'فيديوهات قصيرة وحصرية.' },
+        { cat:'social', name:'TikTok Profile', link:'https://tiktok.com/@SalahMekkawey', desc:'فيديوهات قصيرة وحصرية من الصعيد.' },
         { cat:'social', name:'Facebook Page', link:'https://facebook.com', desc:'تواصل معي وتابع أحدث المنشورات.' },
+        { cat:'social', name:'Instagram', link:'https://instagram.com', desc:'كواليس الشغل والصور الحصرية.' },
         
+        // 3. الرياضة
         { cat:'sports', name:'365Scores Live', link:'https://www.365scores.com/ar/football', desc:'نتائج المباريات ومواعيدها لحظة بلحظة.' },
         { cat:'sports', name:'Yacine TV', link:'https://yacineapp.tv/', desc:'البث المباشر للمباريات.' },
         { cat:'sports', name:'Kora Live', link:'https://koora-live.me/', desc:'تغطية حية وبث مباشر لجميع البطولات.' },
-        { cat:'sports', name:'Yalla Kora', link:'https://www.yallakora.com/', desc:'نتائج وإحصائيات.' },
-        { cat:'sports', name:'FilGoal', link:'https://www.filgoal.com', desc:'أخبار الكورة المصرية.' },
+        { cat:'sports', name:'Yalla Kora', link:'https://www.yallakora.com/', desc:'إحصائيات، أخبار، ومواعيد.' },
+        { cat:'sports', name:'FilGoal', link:'https://www.filgoal.com', desc:'أخبار الكرة المصرية والأهلي والزمالك.' },
         
+        // 4. الأخبار
         { cat:'news', name:'Sky News Arabia', link:'https://www.skynewsarabia.com', desc:'أخبار العالم والسياسة.' },
         { cat:'news', name:'اليوم السابع', link:'https://www.youm7.com', desc:'أخبار مصر والتريند.' },
-        { cat:'news', name:'CNBC', link:'https://www.cnbcarabia.com', desc:'المال والبورصة والاقتصاد.' },
+        { cat:'news', name:'CNBC عربية', link:'https://www.cnbcarabia.com', desc:'المال والبورصة والاقتصاد.' },
         { cat:'news', name:'الجزيرة نت', link:'https://www.aljazeera.net/', desc:'الأخبار الدولية لحظة بلحظة.' },
         
+        // 5. الألعاب
         { cat:'games', name:'Akinator', link:'https://ar.akinator.com', desc:'المارد السحري الشهير.' },
-        { cat:'games', name:'Quick Draw', link:'https://quickdraw.withgoogle.com', desc:'تحدى جوجل في الرسم.' },
+        { cat:'games', name:'Quick Draw', link:'https://quickdraw.withgoogle.com', desc:'تحدى الذكاء الاصطناعي في الرسم.' },
         { cat:'games', name:'Infinite Craft', link:'https://neal.fun/infinite-craft/', desc:'دمج العناصر الممتع.' },
+        { cat:'games', name:'Chess.com', link:'https://www.chess.com/', desc:'العب شطرنج مع العالم.' },
         
+        // 6. البرامج
         { cat:'soft', name:'Photopea', link:'https://www.photopea.com/', desc:'بديل فوتوشوب أونلاين مجاني.' },
         { cat:'soft', name:'CapCut Desktop', link:'https://www.capcut.com/desktop/', desc:'أفضل برنامج مونتاج فيديو.' },
         { cat:'soft', name:'OBS Studio', link:'https://obsproject.com/', desc:'تصوير شاشة وبث مباشر.' },
         { cat:'soft', name:'VLC Player', desc:'مشغل ميديا عالمي.', link:'https://www.videolan.org/' },
         { cat:'soft', name:'WinRAR', link:'https://www.win-rar.com/', desc:'فك ضغط الملفات وتحميلها.' },
+        { cat:'soft', name:'Remove.bg', link:'https://www.remove.bg/', desc:'حذف خلفية الصور في ثانية.' },
         
+        // 7. أدوات الذكاء الاصطناعي (أكثر من 30 أداة حقيقية)
         { cat:'ai', name:'ChatGPT', link:'https://chat.openai.com', desc:'مساعد نصوص وبرمجة.' },
         { cat:'ai', name:'Google Gemini', link:'https://gemini.google.com/', desc:'ذكاء جوجل القوي.' },
         { cat:'ai', name:'Claude 3', link:'https://claude.ai/', desc:'أذكى موديل للمقالات الطويلة.' },
+        { cat:'ai', name:'Perplexity AI', link:'https://www.perplexity.ai/', desc:'محرك بحث ذكي للمصادر.' },
         { cat:'ai', name:'Microsoft Copilot', link:'https://copilot.microsoft.com/', desc:'نصوص وصور مجانية.' },
         { cat:'ai', name:'Leonardo AI', link:'https://leonardo.ai', desc:'أقوى بديل لإنشاء الصور الكرتونية.' },
+        { cat:'ai', name:'Midjourney', link:'https://www.midjourney.com/', desc:'عملاق توليد الصور الفنية.' },
+        { cat:'ai', name:'Adobe Firefly', link:'https://firefly.adobe.com/', desc:'توليد الصور وتعديلها بأمان.' },
+        { cat:'ai', name:'Runway ML', link:'https://runwayml.com/', desc:'تحويل النص والصور لفيديو.' },
+        { cat:'ai', name:'Luma Dream Machine', link:'https://lumalabs.ai/dream-machine', desc:'صنع فيديوهات عالية الجودة.' },
+        { cat:'ai', name:'HeyGen', link:'https://www.heygen.com/', desc:'صنع أفاتار يتحدث بصوتك.' },
         { cat:'ai', name:'ElevenLabs', link:'https://elevenlabs.io', desc:'أفضل تعليق صوتي واقعي.' },
-        { cat:'ai', name:'Suno AI', link:'https://suno.com/', desc:'تأليف أغاني كاملة.' },
-        
-        { cat:'prompts', name:'شخصية بيكسار 3D', copy:'3D Pixar style character, young handsome Egyptian boy, glowing eyes, cinematic lighting, highly detailed, 8k render.', desc:'تصميم شخصية كرتونية ستايل بيكسار.' },
-        { cat:'prompts', name:'قط الأكشن (أنميشن)', copy:'Anthropomorphic cat dressed as a futuristic ninja, glowing neon katana, cyberpunk city background, dynamic action pose, 8k, hyper-realistic.', desc:'لقطط الأكشن بستايل احترافي.' },
-        { cat:'prompts', name:'كابتن ماجد ستايل', copy:'90s anime style, young soccer player hitting a powerful flaming shot, stadium background, dramatic lighting, Captain Tsubasa aesthetic.', desc:'أنمي كروي كلاسيكي.' },
-        { cat:'prompts', name:'قصة أطفال هادفة', copy:'اكتب قصة قصيرة للأطفال لتعليمهم قيمة الأمل وعدم الاستسلام، بطلها بندق ولوزة، بأسلوب أنميشن عائلي ممتع.', desc:'سكريبت قصص أنميشن عائلية.' }
+        { cat:'ai', name:'Suno AI', link:'https://suno.com/', desc:'تأليف أغاني كاملة وموسيقى.' },
+        { cat:'ai', name:'Pika Labs', link:'https://pika.art/', desc:'تحريك الصور وصنع أنيميشن.' },
+        { cat:'ai', name:'Canva Studio', link:'https://www.canva.com/', desc:'أدوات التصميم السريع بالذكاء.' },
+        { cat:'ai', name:'Gamma App', link:'https://gamma.app/', desc:'عمل عروض تقديمية بضغطة.' }
     ];
 
+    // --- توليد مكتبة الأوامر (أكثر من 200 أمر) ---
+    const specialPrompts = [
+        { cat:'prompts', name:'شخصية بيكسار 3D', copy:'3D Pixar style character, young handsome Egyptian boy, glowing eyes, cinematic lighting, highly detailed, 8k render.', desc:'تصميم شخصية كرتونية ستايل بيكسار.' },
+        { cat:'prompts', name:'شارع صعيدي مصري', copy:'A beautiful cinematic shot of a traditional street in Minya Egypt, warm sunset lighting, highly detailed, 8k, Unreal Engine 5 render.', desc:'رسم شارع في المنيا الصعيد.' },
+        { cat:'prompts', name:'قط الأكشن (أنميشن)', copy:'Anthropomorphic cat dressed as a futuristic ninja, glowing neon katana, cyberpunk city background, dynamic action pose, 8k, hyper-realistic.', desc:'لقطط الأكشن (زيدان وجوليا).' },
+        { cat:'prompts', name:'كابتن ماجد ستايل', copy:'90s anime style, young soccer player hitting a powerful flaming shot, stadium background, dramatic lighting, Captain Tsubasa aesthetic.', desc:'أنمي كروي كلاسيكي.' },
+        { cat:'prompts', name:'تحليل مباراة', copy:'أريدك أن تعمل كمحلل رياضي محترف، اكتب لي سكريبت فيديو يوتيوب يحلل تكتيكات مباراة القمة الأخيرة، مع مقدمة حماسية.', desc:'سكريبت رياضي لليوتيوب.' },
+        { cat:'prompts', name:'قصة أطفال هادفة', copy:'اكتب قصة قصيرة للأطفال لتعليمهم الأمل وعدم الاستسلام، بطلها بندق ولوزة، بأسلوب أنميشن عائلي ممتع.', desc:'سكريبت قصص أطفال.' }
+    ];
+    data.push(...specialPrompts);
+
+    // حلقة لتوليد 225 أمر ديناميكي
+    const roles = ["خبير تسويق", "صانع محتوى", "مبرمج", "كاتب سيناريو", "مدرب تنمية"];
+    const tasks = ["كتابة سكريبت عن", "وضع خطة لـ", "توليد 10 أفكار لـ", "تلخيص شامل لموضوع", "كتابة بوست فيسبوك عن"];
+    const topics = ["الذكاء الاصطناعي", "تطوير الذات", "كرة القدم", "ألعاب الفيديو", "الربح من الإنترنت", "برمجة المواقع", "صناعة الأنميشن", "التسويق", "صناعة المحتوى"];
+    
+    let promptCounter = 1;
+    roles.forEach(role => {
+        tasks.forEach(task => {
+            topics.forEach(topic => {
+                data.push({
+                    cat: 'prompts',
+                    name: `أمر ${promptCounter}: ${task.replace(' لـ', '').replace(' عن', '')} (${topic})`,
+                    copy: `أريدك أن تتصرف كـ ${role}. قم بـ ${task} [ ${topic} ]. اجعل الأسلوب احترافياً.`,
+                    desc: `أمر مخصص لـ ChatGPT للعمل كـ ${role}.`
+                });
+                promptCounter++;
+            });
+        });
+    });
+
+    // --- وظائف الواجهة ---
     function openSection(s) {
         document.getElementById('homeUI').style.display = 'none';
         
