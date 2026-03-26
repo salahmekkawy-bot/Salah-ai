@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html id="mainHtml" lang="ar" dir="rtl">
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salah Mekkawey - Premium Hub</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Salah Mekkawey Premium Hub</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -91,6 +90,7 @@
         .subha-btn { background: var(--gold); color: #000; border: none; padding: 0; border-radius: 50%; width: 110px; height: 110px; font-size: 26px; cursor: pointer; box-shadow: 0 10px 30px var(--gold-glow); font-weight: 900; transition: 0.2s; }
         .subha-btn:active { transform: scale(0.95); }
         .subha-reset { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); padding: 8px 20px; border-radius: 50px; cursor: pointer; margin-top: 25px; font-weight: bold; transition: 0.3s; }
+        .subha-reset:hover { background: rgba(255,255,255,0.1); color: var(--text); }
         
         .quran-section { padding: 30px; }
         .quran-section select { width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.2); color: var(--text); border: 1px solid var(--glass-border); margin-bottom: 20px; font-size: 16px; outline: none; }
@@ -109,7 +109,6 @@
         .visitor-counter { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 25px; border-radius: 50px; margin-bottom: 15px; color: var(--gold); font-size: 15px; }
         .visitor-counter img { height: 20px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
         
-        /* شريط بحث الأوامر */
         #searchPrompts { width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text); margin-bottom: 20px; font-size: 15px; outline: none; display: none; }
         #searchPrompts::placeholder { color: var(--text-muted); }
     </style>
@@ -214,9 +213,11 @@
 </div>
 
 <script>
-    // --- كود التحديث لكروم ---
+    // --- كود التحديث وحل مشكلة كروم العادي ---
     if ('serviceWorker' in navigator) { 
-        navigator.serviceWorker.register('sw.js').then(reg => { reg.update(); }); 
+        navigator.serviceWorker.register('sw.js').then(reg => {
+            reg.update(); // يجبر المتصفح يسحب النسخة الجديدة
+        }); 
     }
 
     function updateTime() { 
@@ -226,7 +227,7 @@
     setInterval(updateTime, 1000); updateTime();
 
     function setWisdom() {
-        const w = ["أصبحنا وأصبح الملك لله", "سبحان الله وبحمده", "لا حول ولا قوة إلا بالله", "اللهم صل وسلم على نبينا محمد", "العمل بإتقان عبادة", "الأمل يصنع المعجزات.. استمر!"];
+        const w = ["أصبحنا وأصبح الملك لله", "سبحان الله وبحمده", "لا حول ولا قوة إلا بالله", "اللهم صل وسلم على نبينا محمد", "العمل بإتقان عبادة", "بندق ولوزة: الأمل يصنع المعجزات"];
         document.getElementById('wisdom').innerHTML = `<i class="fas fa-quote-right" style="color: var(--gold);"></i> ${w[Math.floor(Math.random()*w.length)]}`;
     }
     setWisdom();
@@ -249,103 +250,51 @@
     }
     setInterval(updatePrayer, 1000);
 
-    // ==========================================
-    // قاعدة البيانات المتكاملة
-    // ==========================================
     const data = [
-        // الأذكار
         { cat:'azkar', name:'أذكار الصباح', desc:'أذكار الصباح كاملة لحفظك في يومك.', link: 'https://islamqa.info/ar/answers/11169/' },
         { cat:'azkar', name:'أذكار المساء', desc:'أذكار المساء تجلب الطمأنينة لقلبك.', link: 'https://islamqa.info/ar/answers/11169/' },
         { cat:'azkar', name:'سيد الاستغفار', copy: 'اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت.', desc:'دعاء الاستغفار.' },
         { cat:'azkar', name:'دعاء الاستخارة', copy: 'اللهم إني أستخيرك بعلمك، وأستقدرك بقدرتك، وأسألك من فضلك العظيم، فإنك تقدر ولا أقدر، وتعلم ولا أعلم، وأنت علام الغيوب...', desc:'صلاة الاستخارة مكتوب.' },
         
-        // قنواتي
         { cat:'social', name:'YouTube Channel', link:'https://youtube.com/@SalahMekkawey', desc:'قناتي الرسمية للأنميشن والرياضة.' },
         { cat:'social', name:'TikTok Profile', link:'https://tiktok.com/@SalahMekkawey', desc:'فيديوهات قصيرة وحصرية.' },
         { cat:'social', name:'Facebook Page', link:'https://facebook.com', desc:'تواصل معي وتابع أحدث المنشورات.' },
         
-        // الرياضة
-        { cat:'sports', name:'365Scores', link:'https://www.365scores.com/ar/football', desc:'نتائج ومواعيد دقيقة وحية.' },
+        { cat:'sports', name:'365Scores Live', link:'https://www.365scores.com/ar/football', desc:'نتائج المباريات ومواعيدها لحظة بلحظة.' },
         { cat:'sports', name:'Yacine TV', link:'https://yacineapp.tv/', desc:'البث المباشر للمباريات.' },
-        { cat:'sports', name:'Kora Live', link:'https://koora-live.me/', desc:'تغطية حية للمباريات.' },
+        { cat:'sports', name:'Kora Live', link:'https://koora-live.me/', desc:'تغطية حية وبث مباشر لجميع البطولات.' },
         { cat:'sports', name:'Yalla Kora', link:'https://www.yallakora.com/', desc:'نتائج وإحصائيات.' },
         { cat:'sports', name:'FilGoal', link:'https://www.filgoal.com', desc:'أخبار الكورة المصرية.' },
         
-        // الأخبار
         { cat:'news', name:'Sky News Arabia', link:'https://www.skynewsarabia.com', desc:'أخبار العالم والسياسة.' },
         { cat:'news', name:'اليوم السابع', link:'https://www.youm7.com', desc:'أخبار مصر والتريند.' },
         { cat:'news', name:'CNBC', link:'https://www.cnbcarabia.com', desc:'المال والبورصة والاقتصاد.' },
         { cat:'news', name:'الجزيرة نت', link:'https://www.aljazeera.net/', desc:'الأخبار الدولية لحظة بلحظة.' },
         
-        // الألعاب
         { cat:'games', name:'Akinator', link:'https://ar.akinator.com', desc:'المارد السحري الشهير.' },
         { cat:'games', name:'Quick Draw', link:'https://quickdraw.withgoogle.com', desc:'تحدى جوجل في الرسم.' },
         { cat:'games', name:'Infinite Craft', link:'https://neal.fun/infinite-craft/', desc:'دمج العناصر الممتع.' },
         
-        // البرامج
         { cat:'soft', name:'Photopea', link:'https://www.photopea.com/', desc:'بديل فوتوشوب أونلاين مجاني.' },
         { cat:'soft', name:'CapCut Desktop', link:'https://www.capcut.com/desktop/', desc:'أفضل برنامج مونتاج فيديو.' },
         { cat:'soft', name:'OBS Studio', link:'https://obsproject.com/', desc:'تصوير شاشة وبث مباشر.' },
-        { cat:'soft', name:'VLC Player', link:'https://www.videolan.org/', desc:'المشغل العالمي.' },
-        { cat:'soft', name:'Remove.bg', link:'https://www.remove.bg/', desc:'حذف خلفية الصور.' },
+        { cat:'soft', name:'VLC Player', desc:'مشغل ميديا عالمي.', link:'https://www.videolan.org/' },
+        { cat:'soft', name:'WinRAR', link:'https://www.win-rar.com/', desc:'فك ضغط الملفات وتحميلها.' },
         
-        // أدوات الذكاء الاصطناعي الـ 50
         { cat:'ai', name:'ChatGPT', link:'https://chat.openai.com', desc:'مساعد نصوص وبرمجة.' },
         { cat:'ai', name:'Google Gemini', link:'https://gemini.google.com/', desc:'ذكاء جوجل القوي.' },
         { cat:'ai', name:'Claude 3', link:'https://claude.ai/', desc:'أذكى موديل للمقالات الطويلة.' },
         { cat:'ai', name:'Microsoft Copilot', link:'https://copilot.microsoft.com/', desc:'نصوص وصور مجانية.' },
         { cat:'ai', name:'Leonardo AI', link:'https://leonardo.ai', desc:'أقوى بديل لإنشاء الصور الكرتونية.' },
-        { cat:'ai', name:'Midjourney', link:'https://www.midjourney.com/', desc:'عملاق توليد الصور الفنية.' },
-        { cat:'ai', name:'Runway ML', link:'https://runwayml.com/', desc:'تحويل الصور لفيديو احترافي.' },
-        { cat:'ai', name:'HeyGen', link:'https://www.heygen.com/', desc:'صنع أفاتار يتحدث بصوتك.' },
         { cat:'ai', name:'ElevenLabs', link:'https://elevenlabs.io', desc:'أفضل تعليق صوتي واقعي.' },
-        { cat:'ai', name:'Suno AI', link:'https://suno.com/', desc:'تأليف أغاني وألحان كاملة.' },
-        { cat:'ai', name:'Pika Labs', link:'https://pika.art/', desc:'تحريك الأنميشن.' },
-        { cat:'ai', name:'Canva Studio', link:'https://www.canva.com/', desc:'تصميم بالذكاء الاصطناعي.' }
-    ];
-    // إكمال الـ 50 أداة ديناميكياً لتوفير المساحة
-    for(let i=13; i<=50; i++) { data.push({ cat:'ai', name:'AI Premium Tool '+i, desc:'أداة مساعدة بالذكاء الاصطناعي للتصميم والمحتوى.', link:'#' }); }
-
-    // ==========================================
-    // مكتبة الأوامر الضخمة (+200 أمر احترافي)
-    // ==========================================
-    // 1. الأوامر الأساسية المخصصة (أنميشن، رياضة، بيكسار، قطط)
-    const specialPrompts = [
+        { cat:'ai', name:'Suno AI', link:'https://suno.com/', desc:'تأليف أغاني كاملة.' },
+        
         { cat:'prompts', name:'شخصية بيكسار 3D', copy:'3D Pixar style character, young handsome Egyptian boy, glowing eyes, cinematic lighting, highly detailed, 8k render.', desc:'تصميم شخصية كرتونية ستايل بيكسار.' },
-        { cat:'prompts', name:'شارع صعيدي مصري', copy:'A beautiful cinematic shot of a traditional street in Minya Egypt, warm sunset lighting, highly detailed, 8k, Unreal Engine 5 render.', desc:'رسم شارع في المنيا الصعيد.' },
         { cat:'prompts', name:'قط الأكشن (أنميشن)', copy:'Anthropomorphic cat dressed as a futuristic ninja, glowing neon katana, cyberpunk city background, dynamic action pose, 8k, hyper-realistic.', desc:'لقطط الأكشن بستايل احترافي.' },
         { cat:'prompts', name:'كابتن ماجد ستايل', copy:'90s anime style, young soccer player hitting a powerful flaming shot, stadium background, dramatic lighting, Captain Tsubasa aesthetic.', desc:'أنمي كروي كلاسيكي.' },
-        { cat:'prompts', name:'تحليل مباراة (أهلي/زمالك)', copy:'أريدك أن تعمل كمحلل رياضي محترف، اكتب لي سكريبت فيديو يوتيوب مدته 8 دقائق يحلل تكتيكات مباراة القمة الأخيرة بين الأهلي والزمالك، مع مقدمة حماسية تجذب المشاهد.', desc:'سكريبت رياضي جاهز لليوتيوب.' },
-        { cat:'prompts', name:'قصة أطفال هادفة', copy:'اكتب قصة قصيرة للأطفال بأسلوب ممتع ومسلي، تدور حول شخصيتين (بندق ولوزة) لتعليم الأطفال قيمة الأمل وعدم الاستسلام، مع جعل الحوار باللغة العربية الفصحى المبسطة.', desc:'كتابة قصص أنميشن عائلية.' },
-        { cat:'prompts', name:'لوجو جيمنج نيون', copy:'Minimalist esports logo of a gaming controller with wings, glowing neon cyan and purple lines, dark luxury background, vector style.', desc:'تصميم شعارات فخمة.' },
-        { cat:'prompts', name:'قط بالجلابية الصعيدي', copy:'3D Pixar style, cute fluffy cat wearing traditional Egyptian Saidi Galabeya, sitting in a Minya village, highly detailed, 8k.', desc:'رسم قطط بالثقافة المصرية.' }
+        { cat:'prompts', name:'قصة أطفال هادفة', copy:'اكتب قصة قصيرة للأطفال لتعليمهم قيمة الأمل وعدم الاستسلام، بطلها بندق ولوزة، بأسلوب أنميشن عائلي ممتع.', desc:'سكريبت قصص أنميشن عائلية.' }
     ];
-    data.push(...specialPrompts);
 
-    // 2. مولد الأوامر الديناميكي للوصول لأكثر من 200 أمر بدون إرهاق المتصفح
-    const roles = ["خبير تسويق", "صانع محتوى يوتيوب", "مبرمج ويب محترف", "كاتب سيناريو", "مدرب تنمية بشرية"];
-    const tasks = ["كتابة سكريبت مثير عن", "وضع خطة عمل لـ", "توليد 10 أفكار مبتكرة لـ", "تلخيص شامل لموضوع", "كتابة بوست فيسبوك فيرال عن"];
-    const topics = ["الذكاء الاصطناعي", "تطوير الذات", "الرياضة وكرة القدم", "تاريخ مصر", "ألعاب الفيديو", "الربح من الإنترنت", "برمجة المواقع", "صناعة الأنميشن", "التسويق الرقمي"];
-    
-    // إنشاء 225 أمر تلقائياً ودمجهم في المكتبة
-    let promptCounter = 1;
-    roles.forEach(role => {
-        tasks.forEach(task => {
-            topics.forEach(topic => {
-                data.push({
-                    cat: 'prompts',
-                    name: `أمر ${promptCounter}: ${task.replace(' لـ', '').replace(' عن', '')} (${topic})`,
-                    copy: `أريدك أن تتصرف كـ ${role}. قم بـ ${task} [ ${topic} ]. اجعل الأسلوب احترافياً وجذاباً للمتلقي.`,
-                    desc: `أمر مخصص لـ ChatGPT للعمل كـ ${role}.`
-                });
-                promptCounter++;
-            });
-        });
-    });
-
-    // ==========================================
-    // دوال التشغيل
-    // ==========================================
     function openSection(s) {
         document.getElementById('homeUI').style.display = 'none';
         
@@ -413,7 +362,7 @@
     
     function shareSite() {
         if (navigator.share) { navigator.share({ title: 'Salah Mekkawey Hub', url: window.location.href }); } 
-        else { window.open(`https://wa.me/?text=مكتبة صلاح مكاوي الشاملة: ${window.location.href}`, '_blank'); }
+        else { window.open(`https://wa.me/?text=تطبيق صلاح مكاوي الشامل: ${window.location.href}`, '_blank'); }
     }
 </script>
 </body>
