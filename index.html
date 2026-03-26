@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salah Mekkawey - AI & Sports Hub</title>
+    <title>Salah Mekkawey - Ultimate Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* تعريف الألوان (الوضع الليلي الافتراضي) */
         :root {
             --bg: #0b0f1a;
             --card-bg: rgba(20, 26, 42, 0.8);
@@ -19,7 +18,6 @@
             --trans: 0.3s ease;
         }
 
-        /* تعريف ألوان الوضع النهاري */
         body.light-mode {
             --bg: #f1f5f9;
             --card-bg: rgba(255, 255, 255, 0.9);
@@ -37,7 +35,6 @@
             background-attachment: fixed;
         }
 
-        /* الهيدر والأزرار العلوية */
         .header { text-align: center; padding: 25px 20px; position: relative; }
         
         .top-controls {
@@ -47,7 +44,7 @@
         [dir="ltr"] .top-controls { left: auto; right: 20px; }
 
         .lang-switcher, .theme-toggle {
-            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1);
+            background: var(--card-bg); border: 1px solid rgba(0,0,0,0.1);
             color: var(--text); padding: 10px; border-radius: 12px; cursor: pointer;
             backdrop-filter: blur(10px); font-size: 14px; display: flex; align-items: center;
         }
@@ -59,12 +56,11 @@
         }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* الأقسام Navigation */
         .nav-container {
             display: flex; gap: 10px; overflow-x: auto;
             padding: 15px; justify-content: flex-start; scrollbar-width: none;
             background: var(--nav-bg); border-bottom: 1px solid rgba(0,0,0,0.05);
-            backdrop-filter: blur(15px); sticky; top: 0; z-index: 999;
+            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 999;
         }
         .nav-container::-webkit-scrollbar { display: none; }
         
@@ -72,27 +68,34 @@
             background: var(--card-bg); padding: 12px 20px; border-radius: 15px;
             cursor: pointer; transition: var(--trans); border: 1px solid rgba(0,0,0,0.05);
             white-space: nowrap; display: flex; align-items: center; gap: 8px; font-weight: 600;
+            position: relative;
         }
         .nav-btn.active { background: var(--accent); color: white; border-color: var(--neon); }
+        .nav-counter { background: var(--red); color: white; font-size: 10px; padding: 2px 7px; border-radius: 50px; font-weight: bold; }
 
-        /* الكروت والمحتوى */
         .controls { max-width: 800px; margin: 25px auto; padding: 0 20px; display: flex; gap: 10px; }
         .search-bar { flex: 1; padding: 15px 25px; border-radius: 100px; background: var(--card-bg); border: 1px solid rgba(0,0,0,0.1); color: var(--text); outline: none; }
-        
+        .view-toggle { width: 48px; height: 48px; border-radius: 50%; background: var(--card-bg); border: 1px solid rgba(0,0,0,0.1); color: var(--neon); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
         .main-grid { display: grid; gap: 20px; padding: 0 20px; max-width: 1200px; margin: 0 auto 60px; }
         .grid-view { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .list-view { grid-template-columns: 1fr; }
+        .list-view .card { display: flex; align-items: center; justify-content: space-between; }
+        .list-view .card p { margin: 0 20px; height: auto; flex: 1; text-align: inherit; }
+        .list-view .btn { width: auto; min-width: 120px; margin: 0; }
 
         .card {
             background: var(--card-bg); backdrop-filter: blur(10px);
             border-radius: 20px; padding: 25px; border: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            transition: transform 0.3s; animation: fadeIn 0.4s ease forwards;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card h3 { margin: 0 0 8px; color: var(--neon); }
-        .btn { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 15px; }
+        .card h3 { margin: 0 0 8px; color: var(--neon); font-size: 19px; }
+        .card p { font-size: 13px; color: #94a3b8; height: 40px; overflow: hidden; margin-bottom: 15px; }
+        .btn { display: block; background: var(--accent); color: white; text-decoration: none; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; transition: 0.3s; }
 
-        .footer { text-align: center; padding: 40px; opacity: 0.7; border-top: 1px solid rgba(0,0,0,0.05); }
+        .footer { text-align: center; padding: 40px; opacity: 0.7; border-top: 1px solid rgba(0,0,0,0.05); font-size: 13px; }
     </style>
 </head>
 <body id="body">
@@ -119,14 +122,14 @@
             </linearGradient>
         </defs>
     </svg>
-    <h1 id="ui-title">صلاح مكاوي</h1>
+    <h1 id="ui-title">Salah Mekkawey</h1>
 </div>
 
 <div class="nav-container" id="navContainer"></div>
 
 <div class="controls">
     <input type="text" id="search" class="search-bar" placeholder="...">
-    <div class="theme-toggle" onclick="toggleView()"><i class="fas fa-th-list"></i></div>
+    <div class="view-toggle" onclick="toggleView()"><i id="viewIcon" class="fas fa-th-list"></i></div>
 </div>
 
 <div class="main-grid grid-view" id="mainGrid"></div>
@@ -136,39 +139,96 @@
 </div>
 
 <script>
-    // نظام اللغات
     const uiStrings = {
-        ar: { title: "صلاح مكاوي", search: "ابحث هنا...", ai: "ذكاء اصطناعي", sports: "رياضة مباشر", news: "أخبار اليوم", games: "ألعاب", soft: "برامج", ads: "إعلانات", footer: "© 2026 صلاح مكاوي | جميع الحقوق محفوظة", enter: "دخول الآن" },
+        ar: { title: "صلاح مكاوي", search: "ابحث عن أداة، ماتش، أو خبر...", ai: "ذكاء اصطناعي", sports: "رياضة مباشر", news: "أخبار اليوم", games: "ألعاب", soft: "برامج", ads: "إعلانات", footer: "© 2026 صلاح مكاوي | جميع الحقوق محفوظة", enter: "دخول الآن" },
         en: { title: "Salah Mekkawey", search: "Search here...", ai: "AI Tools", sports: "Sports", news: "News", games: "Games", soft: "Software", ads: "Ads", footer: "© 2026 Salah Mekkawey | All Rights Reserved", enter: "Access" },
-        fr: { title: "Salah Mekkawey", search: "Chercher...", ai: "IA Outils", sports: "Sports", news: "Actus", games: "Jeux", soft: "Logiciels", ads: "Pub", footer: "© 2026 Salah Mekkawey | Tous droits réservés", enter: "Entrer" }
+        fr: { title: "Salah Mekkawey", search: "Chercher...", ai: "Outils IA", sports: "Sports", news: "Actus", games: "Jeux", soft: "Logiciels", ads: "Pub", footer: "© 2026 Salah Mekkawey | Tous droits réservés", enter: "Entrer" }
     };
 
-    // البيانات (رياضة وأدوات)
     const items = [
+        // رياضة
         { cat:'sports', name:{ar:'ياسين تيفي (Yacine TV)', en:'Yacine TV', fr:'Yacine TV'}, desc:{ar:'بث مباشر للمباريات والقنوات الرياضية.', en:'Live sports streaming.', fr:'Sports en direct.'}, link:'https://yacineapp.tv/' },
         { cat:'sports', name:{ar:'كورة لايف (Kora Live)', en:'Kora Live', fr:'Kora Live'}, desc:{ar:'تغطية حية لجميع مباريات اليوم.', en:'Live match coverage.', fr:'Matchs en direct.'}, link:'https://koora-live.me/' },
+        { cat:'sports', name:{ar:'يلا كورة (Yalla Kora)', en:'Yalla Kora', fr:'Yalla Kora'}, desc:{ar:'أدق النتائج والمواعيد والترتيب.', en:'Accurate scores and schedules.', fr:'Scores et horaires précis.'}, link:'https://www.yallakora.com/' },
+        { cat:'sports', name:{ar:'365Scores', en:'365Scores', fr:'365Scores'}, desc:{ar:'تنبيهات مباشرة للأهداف والنتائج.', en:'Live goals alerts.', fr:'Alertes buts.'}, link:'https://www.365scores.com' },
+
+        // ذكاء اصطناعي (50 أداة)
         { cat:'ai', name:{ar:'ChatGPT', en:'ChatGPT', fr:'ChatGPT'}, desc:{ar:'ملك النصوص والبرمجة والتأليف.', en:'AI Writing master.', fr:'Maître de l\'IA.'}, link:'https://chat.openai.com' },
-        { cat:'ai', name:{ar:'Leonardo AI', en:'Leonardo AI', fr:'Leonardo AI'}, desc:{ar:'تصميم شخصيات كرتون احترافية.', en:'Cartoon design.', fr:'Dessin animé.'}, link:'https://leonardo.ai' }
-        // ... (بقية الأدوات)
+        { cat:'ai', name:{ar:'Leonardo AI', en:'Leonardo AI', fr:'Leonardo AI'}, desc:{ar:'تصميم شخصيات كرتون احترافية.', en:'Cartoon design.', fr:'Dessin animé.'}, link:'https://leonardo.ai' },
+        { cat:'ai', name:{ar:'ElevenLabs', en:'ElevenLabs', fr:'ElevenLabs'}, desc:{ar:'أفضل تعليق صوتي بشري واقعي.', en:'Realistic AI voice.', fr:'Voix IA réaliste.'}, link:'https://elevenlabs.io' },
+        { cat:'ai', name:{ar:'Midjourney', en:'Midjourney', fr:'Midjourney'}, desc:{ar:'صور فنية بجودة سينمائية.', en:'Cinematic art quality.', fr:'Qualité ciné.'}, link:'https://midjourney.com' },
+        { cat:'ai', name:{ar:'Luma Labs', en:'Luma Dream', fr:'Luma Dream'}, desc:{ar:'تحويل الصور لفيديوهات متحركة.', en:'Transform photos into video.', fr:'Photos en vidéo.'}, link:'https://lumalabs.ai' },
+        { cat:'ai', name:{ar:'Claude AI', en:'Claude AI', fr:'Claude AI'}, desc:{ar:'مساعد ذكي جداً في تحليل البيانات.', en:'Smart data analysis.', fr:'Analyse intelligente.'}, link:'https://claude.ai' },
+        { cat:'ai', name:{ar:'Gemini', en:'Gemini', fr:'Gemini'}, desc:{ar:'ذكاء جوجل المتطور والمحدث.', en:'Google advanced AI.', fr:'L\'IA de Google.'}, link:'https://gemini.google.com' },
+        { cat:'ai', name:{ar:'HeyGen', en:'HeyGen', fr:'HeyGen'}, desc:{ar:'إنشاء فيديوهات بمتحدث واقعي.', en:'AI Video avatars.', fr:'Avatars vidéo IA.'}, link:'https://heygen.com' },
+        { cat:'ai', name:{ar:'D-ID', en:'D-ID', fr:'D-ID'}, desc:{ar:'جعل الصور تتكلم وتتحرك.', en:'Make photos talk.', fr:'Faire parler les photos.'}, link:'https://d-id.com' },
+        { cat:'ai', name:{ar:'Pika Labs', en:'Pika Labs', fr:'Pika Labs'}, desc:{ar:'تحريك أجزاء الصور بدقة.', en:'Animate image parts.', fr:'Animer des images.'}, link:'https://pika.art' },
+        { cat:'ai', name:{ar:'Runway', en:'Runway', fr:'Runway'}, desc:{ar:'مونتاج وتوليد فيديو ذكي.', en:'AI Video generation.', fr:'Génération vidéo IA.'}, link:'https://runwayml.com' },
+        { cat:'ai', name:{ar:'Suno AI', en:'Suno AI', fr:'Suno AI'}, desc:{ar:'تأليف أغاني كاملة بالكلمات.', en:'Create songs with lyrics.', fr:'Créer des chansons.'}, link:'https://suno.com' },
+        { cat:'ai', name:{ar:'Udio', en:'Udio', fr:'Udio'}, desc:{ar:'إنتاج موسيقى عالية الجودة.', en:'High-quality music.', fr:'Musique de qualité.'}, link:'https://udio.com' },
+        { cat:'ai', name:{ar:'Perplexity', en:'Perplexity', fr:'Perplexity'}, desc:{ar:'محرك بحث ذكي بالمصادر.', en:'AI Search with sources.', fr:'Recherche intelligente.'}, link:'https://perplexity.ai' },
+        { cat:'ai', name:{ar:'Jasper', en:'Jasper', fr:'Jasper'}, desc:{ar:'كتابة مقالات تسويقية.', en:'Marketing copy.', fr:'Rédaction marketing.'}, link:'https://jasper.ai' },
+        { cat:'ai', name:{ar:'Copy.ai', en:'Copy.ai', fr:'Copy.ai'}, desc:{ar:'بوستات سوشيال ميديا سريعة.', en:'Social media posts.', fr:'Posts réseaux sociaux.'}, link:'https://copy.ai' },
+        { cat:'ai', name:{ar:'Ideogram', en:'Ideogram', fr:'Ideogram'}, desc:{ar:'نصوص دقيقة داخل الصور.', en:'Precise text in images.', fr:'Texte dans les images.'}, link:'https://ideogram.ai' },
+        { cat:'ai', name:{ar:'Lexica', en:'Lexica', fr:'Lexica'}, desc:{ar:'محرك بحث صور الـ AI.', en:'AI image search.', fr:'Recherche d\'images IA.'}, link:'https://lexica.art' },
+        { cat:'ai', name:{ar:'Adobe Firefly', en:'Firefly', fr:'Firefly'}, desc:{ar:'رسم ذكي من أدوبي.', en:'Adobe generative AI.', fr:'L\'IA d\'Adobe.'}, link:'https://firefly.adobe.com' },
+        { cat:'ai', name:{ar:'Krea AI', en:'Krea AI', fr:'Krea AI'}, desc:{ar:'تحسين الصور في الوقت الفعلي.', en:'Real-time enhancement.', fr:'Amélioration.'}, link:'https://krea.ai' },
+        { cat:'ai', name:{ar:'Remove.bg', en:'Remove.bg', fr:'Remove.bg'}, desc:{ar:'مسح خلفية الصور فوراً.', en:'Remove backgrounds.', fr:'Supprimer les fonds.'}, link:'https://remove.bg' },
+        { cat:'ai', name:{ar:'Upscayl', en:'Upscayl', fr:'Upscayl'}, desc:{ar:'تكبير وتحسين جودة الصور.', en:'Upscale images.', fr:'Agrandir les images.'}, link:'https://upscayl.org' },
+        { cat:'ai', name:{ar:'Gamma AI', en:'Gamma AI', fr:'Gamma AI'}, desc:{ar:'عروض تقديمية ذكية.', en:'AI Presentations.', fr:'Présentations IA.'}, link:'https://gamma.app' },
+        { cat:'ai', name:{ar:'Tome', en:'Tome', fr:'Tome'}, desc:{ar:'بناء قصص تفاعلية.', en:'Interactive storytelling.', fr:'Narration interactive.'}, link:'https://tome.app' },
+        { cat:'ai', name:{ar:'InVideo', en:'InVideo', fr:'InVideo'}, desc:{ar:'تحويل نص لفيديو.', en:'Text to video.', fr:'Texte en vidéo.'}, link:'https://invideo.io' },
+        { cat:'ai', name:{ar:'Synthesia', en:'Synthesia', fr:'Synthesia'}, desc:{ar:'مذيعين افتراضيين.', en:'AI Avatars.', fr:'Avatars IA.'}, link:'https://synthesia.io' },
+        { cat:'ai', name:{ar:'Voice.ai', en:'Voice.ai', fr:'Voice.ai'}, desc:{ar:'تغيير نبرة الصوت.', en:'Voice changer.', fr:'Changeur de voix.'}, link:'https://voice.ai' },
+        { cat:'ai', name:{ar:'Murf', en:'Murf', fr:'Murf'}, desc:{ar:'تعليق صوتي فخم.', en:'Pro voiceovers.', fr:'Voix pro.'}, link:'https://murf.ai' },
+        { cat:'ai', name:{ar:'Lalal.ai', en:'Lalal.ai', fr:'Lalal.ai'}, desc:{ar:'فصل الصوت عن المزيكا.', en:'Voice separator.', fr:'Séparateur voix.'}, link:'https://lalal.ai' },
+        { cat:'ai', name:{ar:'Soundraw', en:'Soundraw', fr:'Soundraw'}, desc:{ar:'ألحان بدون حقوق.', en:'Royalty-free music.', fr:'Musique libre.'}, link:'https://soundraw.io' },
+        { cat:'ai', name:{ar:'Descript', en:'Descript', fr:'Descript'}, desc:{ar:'تعديل صوت بنصوص.', en:'Audio editing by text.', fr:'Édition audio.'}, link:'https://descript.com' },
+        { cat:'ai', name:{ar:'CapCut AI', en:'CapCut AI', fr:'CapCut AI'}, desc:{ar:'مونتاج ذكي.', en:'AI Video editing.', fr:'Édition vidéo IA.'}, link:'https://capcut.com' },
+        { cat:'ai', name:{ar:'Kaiber', en:'Kaiber', fr:'Kaiber'}, desc:{ar:'أنميشن فيديو إبداعي.', en:'Creative animation.', fr:'Animation créative.'}, link:'https://kaiber.ai' },
+        { cat:'ai', name:{ar:'Photoroom', en:'Photoroom', fr:'Photoroom'}, desc:{ar:'تصوير منتجات.', en:'Product photos.', fr:'Photos produits.'}, link:'https://photoroom.com' },
+        { cat:'ai', name:{ar:'Kive', en:'Kive', fr:'Kive'}, desc:{ar:'تنظيم لوحة إلهام.', en:'Moodboards.', fr:'Tableaux d\'humeur.'}, link:'https://kive.ai' },
+        { cat:'ai', name:{ar:'Poised', en:'Poised', fr:'Poised'}, desc:{ar:'تحسين مهارة الإلقاء.', en:'Communication coach.', fr:'Coach communication.'}, link:'https://poised.com' },
+        { cat:'ai', name:{ar:'Looka', en:'Looka', fr:'Looka'}, desc:{ar:'تصميم لوجو ذكي.', en:'AI Logo design.', fr:'Design de logo IA.'}, link:'https://looka.com' },
+        { cat:'ai', name:{ar:'Skybox', en:'Skybox', fr:'Skybox'}, desc:{ar:'بيئات 360 درجة.', en:'360 environments.', fr:'Environnements 360.'}, link:'https://blockadelabs.com' },
+        { cat:'ai', name:{ar:'Meshy', en:'Meshy', fr:'Meshy'}, desc:{ar:'نماذج 3D من نص.', en:'3D models from text.', fr:'Modèles 3D par texte.'}, link:'https://meshy.ai' },
+        { cat:'ai', name:{ar:'Spline', en:'Spline', fr:'Spline'}, desc:{ar:'تصميم 3D للمواقع.', en:'Interactive 3D.', fr:'3D interactif.'}, link:'https://spline.design' },
+        { cat:'ai', name:{ar:'Otter', en:'Otter', fr:'Otter'}, desc:{ar:'تحويل صوت لنص.', en:'Audio transcription.', fr:'Transcription audio.'}, link:'https://otter.ai' },
+        { cat:'ai', name:{ar:'Grammarly', en:'Grammarly', fr:'Grammarly'}, desc:{ar:'تدقيق لغوي.', en:'Grammar checker.', fr:'Correcteur.'}, link:'https://grammarly.com' },
+        { cat:'ai', name:{ar:'Quillbot', en:'Quillbot', fr:'Quillbot'}, desc:{ar:'إعادة صياغة ذكية.', en:'Paraphrasing.', fr:'Paraphrase.'}, link:'https://quillbot.com' },
+        { cat:'ai', name:{ar:'DeepL', en:'DeepL', fr:'DeepL'}, desc:{ar:'أدق ترجمة عالمية.', en:'Accurate translation.', fr:'Traduction précise.'}, link:'https://deepl.com' },
+        { cat:'ai', name:{ar:'Notion AI', en:'Notion AI', fr:'Notion AI'}, desc:{ar:'تنظيم ملاحظات.', en:'Smart notes.', fr:'Notes intelligentes.'}, link:'https://notion.so' },
+        { cat:'ai', name:{ar:'Beautiful.ai', en:'Beautiful.ai', fr:'Beautiful.ai'}, desc:{ar:'بوربوينت ذكي.', en:'AI Slides.', fr:'Diapositives IA.'}, link:'https://beautiful.ai' },
+        { cat:'ai', name:{ar:'Krisp', en:'Krisp', fr:'Krisp'}, desc:{ar:'إلغاء ضوضاء المايك.', en:'Noise cancellation.', fr:'Suppression de bruit.'}, link:'https://krisp.ai' },
+        { cat:'ai', name:{ar:'Pictory', en:'Pictory', fr:'Pictory'}, desc:{ar:'فيديو من مقالات.', en:'Video from text.', fr:'Vidéo par texte.'}, link:'https://pictory.ai' },
+        { cat:'ai', name:{ar:'Playground', en:'Playground', fr:'Playground'}, desc:{ar:'رسم صور مجاني.', en:'Free image gen.', fr:'Génération d\'images.'}, link:'https://playground.com' },
+        { cat:'ai', name:{ar:'Jasper Art', en:'Jasper Art', fr:'Jasper Art'}, desc:{ar:'صور فنية بالذكاء.', en:'AI Art generation.', fr:'Génération d\'art IA.'}, link:'https://jasper.ai/art' },
+
+        // أخبار
+        { cat:'news', name:{ar:'سكاي نيوز', en:'Sky News', fr:'Sky News'}, desc:{ar:'أخبار العالم والسياسة.', en:'World news.', fr:'Infos mondiales.'}, link:'https://www.skynewsarabia.com' },
+        { cat:'news', name:{ar:'CNBC العربية', en:'CNBC', fr:'CNBC'}, desc:{ar:'تحليلات المال والبورصة.', en:'Finance news.', fr:'Économie.'}, link:'https://www.cnbcarabia.com' },
+        { cat:'news', name:{ar:'اليوم السابع', en:'Youm7', fr:'Youm7'}, desc:{ar:'أخبار مصر والتريند.', en:'Egypt news.', fr:'Infos Égypte.'}, link:'https://www.youm7.com' },
+
+        // ألعاب
+        { cat:'games', name:{ar:'Akinator', en:'Akinator', fr:'Akinator'}, desc:{ar:'المارد السحري.', en:'The Web Genius.', fr:'Le Génie du Web.'}, link:'https://ar.akinator.com' },
+        { cat:'games', name:{ar:'Infinite Craft', en:'Infinite Craft', fr:'Infinite Craft'}, desc:{ar:'دمج العناصر الممتع.', en:'Element merging.', fr:'Fusion d\'éléments.'}, link:'https://neal.fun/infinite-craft/' },
+
+        // برامج
+        { cat:'soft', name:{ar:'Photopea', en:'Photopea', fr:'Photopea'}, desc:{ar:'بديل فوتوشوب أونلاين.', en:'Free Photoshop.', fr:'Photoshop gratuit.'}, link:'https://www.photopea.com/' },
+        { cat:'soft', name:{ar:'CapCut PC', en:'CapCut PC', fr:'CapCut PC'}, desc:{ar:'أقوى برنامج مونتاج.', en:'Best video editor.', fr:'Meilleur éditeur.'}, link:'https://www.capcut.com/desktop/' }
     ];
 
     let currentLang = 'ar';
     let currentCat = 'ai';
     let isGrid = true;
 
-    // وظيفة تبديل الوضع (ليلي/نهاري)
     function toggleTheme() {
-        const body = document.getElementById('body');
-        const icon = document.getElementById('themeIcon');
-        body.classList.toggle('light-mode');
-        
-        if (body.classList.contains('light-mode')) {
-            icon.className = 'fas fa-sun';
-            localStorage.setItem('theme', 'light');
-        } else {
-            icon.className = 'fas fa-moon';
-            localStorage.setItem('theme', 'dark');
-        }
+        const b = document.getElementById('body');
+        const i = document.getElementById('themeIcon');
+        b.classList.toggle('light-mode');
+        const mode = b.classList.contains('light-mode') ? 'light' : 'dark';
+        i.className = mode === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        localStorage.setItem('theme', mode);
     }
 
     function changeLang(lang) {
@@ -185,21 +245,29 @@
         const nav = document.getElementById('navContainer');
         const cats = ['ai', 'sports', 'news', 'games', 'soft', 'ads'];
         const icons = { ai: 'robot', sports: 'futbol', news: 'newspaper', games: 'gamepad', soft: 'desktop', ads: 'ad' };
-        nav.innerHTML = cats.map(c => `
+        nav.innerHTML = cats.map(c => {
+            let count = localStorage.getItem('nav_' + c) || 0;
+            return `
             <div class="nav-btn ${currentCat === c ? 'active' : ''}" onclick="setCat('${c}', this)">
-                <i class="fas fa-${icons[c]}"></i> ${uiStrings[currentLang][c]}
-            </div>`).join('');
+                <i class="fas fa-${icons[c]}"></i> ${uiStrings[currentLang][c]} <span class="nav-counter">${count}</span>
+            </div>`;
+        }).join('');
     }
 
     function setCat(c, btn) {
         currentCat = c;
+        let count = parseInt(localStorage.getItem('nav_' + c) || 0) + 1;
+        localStorage.setItem('nav_' + c, count);
         renderNav();
         render();
     }
 
     function toggleView() {
         isGrid = !isGrid;
-        document.getElementById('mainGrid').className = isGrid ? 'main-grid grid-view' : 'main-grid list-view';
+        const g = document.getElementById('mainGrid');
+        const i = document.getElementById('viewIcon');
+        g.className = isGrid ? 'main-grid grid-view' : 'main-grid list-view';
+        i.className = isGrid ? 'fas fa-th-list' : 'fas fa-th-large';
     }
 
     function render(s = "") {
@@ -207,11 +275,15 @@
         g.innerHTML = "";
         const f = items.filter(t => t.cat === currentCat && t.name[currentLang].toLowerCase().includes(s.toLowerCase()));
         f.forEach(t => {
-            g.innerHTML += `<div class="card"><h3>${t.name[currentLang]}</h3><p>${t.desc[currentLang]}</p><a href="${t.link}" target="_blank" class="btn">${uiStrings[currentLang].enter}</a></div>`;
+            g.innerHTML += `
+            <div class="card">
+                <h3>${t.name[currentLang]}</h3>
+                <p>${t.desc[currentLang]}</p>
+                <a href="${t.link}" target="_blank" class="btn">${uiStrings[currentLang].enter}</a>
+            </div>`;
         });
     }
 
-    // التحقق من الثيم المحفوظ
     if (localStorage.getItem('theme') === 'light') toggleTheme();
     document.getElementById('search').addEventListener('input', e => render(e.target.value));
     changeLang('ar');
