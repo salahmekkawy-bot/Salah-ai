@@ -60,17 +60,12 @@
 
         .main-logo { width: 80px; height: 80px; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); }
 
-        .action-btns { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+        .action-btns { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
         .btn-pill { border: none; padding: 12px 24px; border-radius: 50px; font-weight: bold; cursor: pointer; color: #fff; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .inst-btn { background: linear-gradient(45deg, var(--gold), #d97706); }
         .inst-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--gold-glow); }
         .share-btn { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); color: var(--text); }
         .wa-btn { background: var(--green); }
-
-        .live-scores-container { max-width: 900px; margin: 0 auto 35px; padding: 0 20px; }
-        .live-frame { width: 100%; height: 220px; overflow: hidden; position: relative; }
-        .live-frame iframe { width: 100%; height: 100%; border: none; border-radius: 20px; }
-        .source-tag { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 10px; font-weight: 600; }
 
         .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; padding: 0 20px 40px; max-width: 1000px; margin: 0 auto; }
         .folder-card { padding: 25px 10px; text-align: center; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -100,9 +95,9 @@
 
         .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .item-card { padding: 30px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
-        .item-card h3 { color: var(--gold); margin: 0 0 12px; font-size: 20px; }
-        .item-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; }
-        .btn-link { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text); padding: 12px; width: 100%; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: block; text-align: center; font-size: 15px; transition: 0.3s; }
+        .item-card h3 { color: var(--gold); margin: 0 0 12px; font-size: 19px; }
+        .item-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; }
+        .btn-link { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text); padding: 12px; width: 100%; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: block; text-align: center; font-size: 14px; transition: 0.3s; }
         .btn-link:hover { background: var(--gold); color: #000; border-color: var(--gold); }
         .copy-tag { position: absolute; top: 15px; left: 15px; background: rgba(245, 185, 33, 0.2); color: var(--gold); padding: 5px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid rgba(245, 185, 33, 0.4); }
 
@@ -152,13 +147,6 @@
 </div>
 
 <div id="homeUI">
-    <div class="live-scores-container">
-        <div class="live-frame glass-panel">
-            <iframe src="https://www.365scores.com/ar/football"></iframe>
-        </div>
-        <p class="source-tag">Live Scores Official</p>
-    </div>
-
     <div class="categories-grid">
         <div class="folder-card glass-panel" onclick="openSection('islamic')"><i class="fas fa-kaaba"></i><span>نور الإيمان</span></div>
         <div class="folder-card glass-panel" onclick="openSection('azkar')"><i class="fas fa-hands"></i><span>أذكار وأدعية</span></div>
@@ -217,10 +205,10 @@
 </div>
 
 <script>
-    // --- كود إجبار التحديث (لحل مشكلة الكاش في كروم) ---
+    // --- كود إجبار التحديث وحل مشكلة كروم العادي ---
     if ('serviceWorker' in navigator) { 
         navigator.serviceWorker.register('sw.js').then(reg => {
-            reg.update(); // يجبر المتصفح يسحب النسخة الجديدة
+            reg.update(); 
         }); 
     }
 
@@ -254,47 +242,102 @@
     }
     setInterval(updatePrayer, 1000);
 
+    // ==========================================
+    // قاعدة البيانات الحقيقية والكاملة (بدون أي كسل)
+    // ==========================================
     const data = [
-        { cat:'azkar', name:'أذكار الصباح', desc:'"أصبحنا وأصبح الملك لله.." - لتحفظك في يومك.' },
-        { cat:'azkar', name:'أذكار المساء', desc:'"أمسينا وأمسى الملك لله.." - تجلب الطمأنينة.' },
-        { cat:'azkar', name:'سيد الاستغفار', desc:'اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك..' },
-        
+        // --- 1. الأذكار والأدعية ---
+        { cat:'azkar', name:'أذكار الصباح', desc:'أذكار الصباح كاملة لحفظك في يومك.', link: 'https://islamqa.info/ar/answers/11169/%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa' },
+        { cat:'azkar', name:'أذكار المساء', desc:'أذكار المساء تجلب الطمأنينة لقلبك.', link: 'https://islamqa.info/ar/answers/11169/%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa%e2%80%aa' },
+        { cat:'azkar', name:'سيد الاستغفار', desc:'"اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك.."', copy: 'اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت.' },
+        { cat:'azkar', name:'دعاء الاستخارة', desc:'دعاء صلاة الاستخارة مكتوب.', copy: 'اللهم إني أستخيرك بعلمك، وأستقدرك بقدرتك، وأسألك من فضلك العظيم، فإنك تقدر ولا أقدر، وتعلم ولا أعلم، وأنت علام الغيوب...' },
+        { cat:'azkar', name:'أذكار النوم', desc:'حصن نفسك قبل النوم.', copy: 'باسمك ربي وضعت جنبي، وبك أرفعه، فإن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين.' },
+
+        // --- 2. قنواتي ---
         { cat:'social', name:'YouTube Channel', link:'https://youtube.com/@SalahMekkawey', desc:'قناتي الرسمية للأنميشن والرياضة.' },
-        { cat:'social', name:'TikTok Profile', link:'https://tiktok.com/@SalahMekkawey', desc:'فيديوهات قصيرة وحصرية.' },
-        { cat:'social', name:'Facebook Page', link:'https://facebook.com', desc:'أحدث المنشورات والأخبار.' },
+        { cat:'social', name:'TikTok Profile', link:'https://tiktok.com/@SalahMekkawey', desc:'فيديوهات قصيرة حصرية من الصعيد.' },
+        { cat:'social', name:'Facebook Page', link:'https://facebook.com', desc:'تواصل معي وتابع أحدث المنشورات.' },
+        { cat:'social', name:'Instagram', link:'https://instagram.com', desc:'كواليس الشغل والصور الحصرية.' },
+
+        // --- 3. الرياضة المباشرة ---
+        { cat:'sports', name:'365Scores Live', link:'https://www.365scores.com/ar/football', desc:'نتائج المباريات ومواعيدها لحظة بلحظة.' },
+        { cat:'sports', name:'Yacine TV', link:'https://yacineapp.tv/', desc:'تطبيق ياسين تيفي للبث المباشر.' },
+        { cat:'sports', name:'Kora Live', link:'https://koora-live.me/', desc:'تغطية حية وبث مباشر لجميع البطولات.' },
+        { cat:'sports', name:'Yalla Kora', link:'https://www.yallakora.com/', desc:'إحصائيات، أخبار، ومواعيد يلا كورة.' },
+        { cat:'sports', name:'FilGoal', link:'https://www.filgoal.com', desc:'في الجول: كل أخبار الأهلي والزمالك.' },
+        { cat:'sports', name:'Kooora', link:'https://www.kooora.com/', desc:'موقع كووورة الأول عربياً.' },
+
+        // --- 4. الأخبار ---
+        { cat:'news', name:'Sky News Arabia', link:'https://www.skynewsarabia.com', desc:'أخبار العالم والسياسة العاجلة.' },
+        { cat:'news', name:'اليوم السابع', link:'https://www.youm7.com', desc:'تغطية شاملة لكل أخبار مصر.' },
+        { cat:'news', name:'CNBC عربية', link:'https://www.cnbcarabia.com', desc:'المال والبورصة والاقتصاد.' },
+        { cat:'news', name:'مصراوي', link:'https://www.masrawy.com', desc:'أخبار اجتماعية، فنية، ورياضية.' },
+        { cat:'news', name:'الجزيرة نت', link:'https://www.aljazeera.net/', desc:'الأخبار الدولية لحظة بلحظة.' },
+
+        // --- 5. الألعاب ---
+        { cat:'games', name:'Akinator', desc:'المارد السحري اللي بيعرف بتفكر في مين.', link:'https://ar.akinator.com' },
+        { cat:'games', name:'Quick Draw', desc:'تحدى جوجل في الرسم في 20 ثانية.', link:'https://quickdraw.withgoogle.com' },
+        { cat:'games', name:'Infinite Craft', desc:'لعبة دمج العناصر (نار + ماء = بخار).', link:'https://neal.fun/infinite-craft/' },
+        { cat:'games', name:'AI Dungeon', desc:'اصنع قصص خيالية بالذكاء الاصطناعي.', link:'https://aidungeon.com' },
+        { cat:'games', name:'Wordle', desc:'خمن الكلمة الإنجليزية في 6 محاولات.', link:'https://www.nytimes.com/games/wordle/index.html' },
+        { cat:'games', name:'Chess.com', desc:'العب شطرنج مع ملايين حول العالم.', link:'https://www.chess.com/' },
+
+        // --- 6. برامج مهمة للمونتاج والكمبيوتر ---
+        { cat:'soft', name:'Photopea', desc:'فوتوشوب كامل أونلاين مجاني.', link:'https://www.photopea.com/' },
+        { cat:'soft', name:'CapCut Desktop', desc:'برنامج المونتاج الأسهل للفيديوهات.', link:'https://www.capcut.com/desktop/' },
+        { cat:'soft', name:'OBS Studio', desc:'برنامج تصوير الشاشة والبث المباشر.', link:'https://obsproject.com/' },
+        { cat:'soft', name:'VLC Player', desc:'المشغل اللي بيشغل أي صيغة فيديو.', link:'https://www.videolan.org/' },
+        { cat:'soft', name:'WinRAR', desc:'لفك ضغط الملفات بسهولة.', link:'https://www.win-rar.com/' },
+        { cat:'soft', name:'Remove.bg', desc:'حذف خلفية الصور في ثانية واحدة.', link:'https://www.remove.bg/' },
+
+        // --- 7. مكتبة الأوامر (البرومبتات جاهزة للنسخ) ---
+        { cat:'prompts', name:'Pixar Avatar (للشباب)', copy:'3D Pixar style character, young handsome Egyptian man, glowing eyes, cinematic lighting, highly detailed, 8k render.', desc:'صمم شخصيتك كأنك في فيلم بيكسار.' },
+        { cat:'prompts', name:'Minya Street Scene', copy:'A beautiful cinematic shot of a traditional street in Minya Egypt, warm sunset lighting, highly detailed, 8k, Unreal Engine 5 render.', desc:'رسم شارع صعيدي مصري كأنه حقيقي.' },
+        { cat:'prompts', name:'Ninja Cat (قط الأكشن)', copy:'Anthropomorphic cat dressed as a futuristic ninja, glowing neon katana, cyberpunk city background, dynamic action pose, 8k, hyper-realistic.', desc:'قطط الأكشن الخيالية (زي زيدان وجوليا).' },
+        { cat:'prompts', name:'Neon Gaming Logo', copy:'Minimalist esports logo of a gaming controller with wings, glowing neon cyan and purple lines, dark luxury background, vector style.', desc:'تصميم لوجو جيمنج احترافي نيون.' },
+        { cat:'prompts', name:'Captain Tsubasa Style', copy:'90s anime style, young soccer player hitting a powerful flaming shot, stadium background, dramatic lighting, Captain Tsubasa aesthetic.', desc:'ستايل الكابتن ماجد القديم.' },
+
+        // --- 8. الذكاء الاصطناعي (أكثر من 30 أداة حقيقية مش أمثلة!) ---
+        // نصوص ومحادثة
+        { cat:'ai', name:'ChatGPT', link:'https://chat.openai.com', desc:'أشهر مساعد ذكي للنصوص والبرمجة.' },
+        { cat:'ai', name:'Google Gemini', link:'https://gemini.google.com/', desc:'ذكاء جوجل القوي (بديل بارد).' },
+        { cat:'ai', name:'Claude 3', link:'https://claude.ai/', desc:'أذكى موديل لكتابة الأكواد والنصوص الطويلة.' },
+        { cat:'ai', name:'Perplexity AI', link:'https://www.perplexity.ai/', desc:'محرك بحث ذكي بيجيب المصادر بدقة.' },
+        { cat:'ai', name:'Microsoft Copilot', link:'https://copilot.microsoft.com/', desc:'مساعد مايكروسوفت لإنشاء الصور والنصوص مجاناً.' },
+        { cat:'ai', name:'Poe', link:'https://poe.com/', desc:'منصة بتجمع كل روبوتات الذكاء في مكان واحد.' },
+        { cat:'ai', name:'Character.ai', link:'https://character.ai/', desc:'اتكلم مع شخصيات خيالية أو حقيقية.' },
+        { cat:'ai', name:'Pi AI', link:'https://pi.ai/', desc:'روبوت محادثة ودود جداً كأنه صاحبك.' },
         
-        { cat:'sports', name:'365Scores', link:'https://www.365scores.com/ar/football', desc:'نتائج ومواعيد دقيقة وحية.' },
-        { cat:'sports', name:'Yacine TV', link:'https://yacineapp.tv/', desc:'البث المباشر للمباريات.' },
-        { cat:'sports', name:'Kora Live', link:'https://koora-live.me/', desc:'تغطية حية للمباريات.' },
-        { cat:'sports', name:'Yalla Kora', link:'https://www.yallakora.com/', desc:'نتائج وإحصائيات.' },
-        { cat:'sports', name:'FilGoal', link:'https://www.filgoal.com', desc:'أخبار الكورة المصرية.' },
+        // صور وتصميم
+        { cat:'ai', name:'Leonardo AI', link:'https://leonardo.ai', desc:'أقوى بديل مجاني لإنشاء الصور الكرتونية.' },
+        { cat:'ai', name:'Midjourney', link:'https://www.midjourney.com/', desc:'عملاق توليد الصور (عبر منصة ديسكورد).' },
+        { cat:'ai', name:'Adobe Firefly', link:'https://firefly.adobe.com/', desc:'توليد الصور وتعديلها بأمان من أدوبي.' },
+        { cat:'ai', name:'Krea AI', link:'https://www.krea.ai/', desc:'توليد الصور في الوقت الفعلي (Real-time).' },
+        { cat:'ai', name:'Magnific AI', link:'https://magnific.ai/', desc:'تكبير وتوضيح الصور بدقة خرافية (Upscaler).' },
+        { cat:'ai', name:'Playground AI', link:'https://playgroundai.com/', desc:'تصميم صور والتعديل عليها بسهولة.' },
+        { cat:'ai', name:'Tensor.art', link:'https://tensor.art/', desc:'توليد صور باستخدام موديلات مفتوحة المصدر.' },
         
-        { cat:'news', name:'Sky News', link:'https://www.skynewsarabia.com', desc:'أخبار العالم والسياسة.' },
-        { cat:'news', name:'اليوم السابع', link:'https://www.youm7.com', desc:'أخبار مصر والتريند.' },
-        { cat:'news', name:'CNBC', link:'https://www.cnbcarabia.com', desc:'المال والبورصة.' },
-        { cat:'news', name:'مصراوي', link:'https://www.masrawy.com', desc:'أخبار اجتماعية.' },
+        // فيديو وأنيميشن
+        { cat:'ai', name:'Runway ML (Gen-2)', link:'https://runwayml.com/', desc:'تحويل النص أو الصور إلى فيديو احترافي.' },
+        { cat:'ai', name:'Luma Dream Machine', link:'https://lumalabs.ai/dream-machine', desc:'صنع فيديوهات عالية الجودة بالذكاء الاصطناعي.' },
+        { cat:'ai', name:'Pika Labs', link:'https://pika.art/', desc:'تحريك الصور الكرتونية وصنع أنيميشن.' },
+        { cat:'ai', name:'HeyGen', link:'https://www.heygen.com/', desc:'صنع أفاتار بيتكلم بصوتك وحركتك.' },
+        { cat:'ai', name:'Synthesia', link:'https://www.synthesia.io/', desc:'توليد فيديوهات لمقدمين برامج بـ 120 لغة.' },
+        { cat:'ai', name:'Kaiber', link:'https://kaiber.ai/', desc:'تحويل الفيديو إلى ستايل أنمي أو كرتون.' },
+        { cat:'ai', name:'Kling AI', link:'https://klingai.com/', desc:'عملاق جديد في توليد الفيديوهات الواقعية.' },
         
-        { cat:'games', name:'Akinator', desc:'المارد السحري الشهير.', link:'https://ar.akinator.com' },
-        { cat:'games', name:'Quick Draw', desc:'تحدى الذكاء الاصطناعي في الرسم.', link:'https://quickdraw.withgoogle.com' },
-        { cat:'games', name:'Infinite Craft', desc:'دمج العناصر الممتع.', link:'https://neal.fun/infinite-craft/' },
-        { cat:'games', name:'AI Dungeon', desc:'قصص خيالية تكتبها بنفسك.', link:'https://aidungeon.com' },
-        { cat:'games', name:'Emoji Hunt', desc:'ابحث عن الأشياء بكاميرا الموبايل.', link:'https://emojiscavengerhunt.withgoogle.com/' },
+        // صوت وموسيقى
+        { cat:'ai', name:'ElevenLabs', link:'https://elevenlabs.io', desc:'أفضل أداة للتعليق الصوتي الواقعي.' },
+        { cat:'ai', name:'Suno AI', link:'https://suno.com/', desc:'تأليف أغاني كاملة (كلمات وألحان غناء).' },
+        { cat:'ai', name:'Udio', link:'https://www.udio.com/', desc:'إنشاء مقاطع موسيقية بجودة الاستوديو.' },
+        { cat:'ai', name:'Murf.ai', link:'https://murf.ai/', desc:'تحويل النص إلى صوت احترافي للإعلانات.' },
+        { cat:'ai', name:'Vocal Remover', link:'https://vocalremover.org/', desc:'فصل الصوت عن الموسيقى بالذكاء الاصطناعي.' },
         
-        { cat:'soft', name:'Photopea', desc:'بديل فوتوشوب أونلاين مجاني.', link:'https://www.photopea.com/' },
-        { cat:'soft', name:'CapCut PC', desc:'أفضل برنامج مونتاج فيديو.', link:'https://www.capcut.com/desktop/' },
-        { cat:'soft', name:'OBS Studio', desc:'تصوير شاشة وبث مباشر.', link:'https://obsproject.com/' },
-        { cat:'soft', name:'VLC Player', desc:'مشغل ميديا عالمي.', link:'https://www.videolan.org/' },
-        { cat:'soft', name:'WinRAR', desc:'فك ضغط الملفات وتحميلها.', link:'https://www.win-rar.com/' },
-        
-        { cat:'prompts', name:'Pixar Avatar', copy:'3D Pixar style character, young man, glowing eyes, cinematic lighting, 8k.', desc:'لعمل صورة شخصية كرتونية.' },
-        { cat:'prompts', name:'Epic Cat', copy:'Majestic cat in space suit, nebula background, hyper-realistic, 8k.', desc:'لعمل صور قطط ملكية.' },
-        
-        { cat:'ai', name:'ChatGPT', link:'https://chat.openai.com', desc:'مساعد نصوص وبرمجة.' },
-        { cat:'ai', name:'Leonardo AI', link:'https://leonardo.ai', desc:'تصميم صور كرتونية.' },
-        { cat:'ai', name:'ElevenLabs', link:'https://elevenlabs.io', desc:'تعليق صوتي واقعي.' }
+        // إنتاجية وعمل
+        { cat:'ai', name:'Canva Magic Studio', link:'https://www.canva.com/', desc:'أدوات التصميم السريع بالذكاء الاصطناعي.' },
+        { cat:'ai', name:'Gamma App', link:'https://gamma.app/', desc:'عمل عروض تقديمية (PowerPoint) بضغطة.' },
+        { cat:'ai', name:'Notion AI', link:'https://www.notion.so/product/ai', desc:'تنظيم شغلك وكتابة المقالات.' }
     ];
-    // استكمال 50 أداة ذكاء اصطناعي
-    for(let i=1; i<=47; i++) { data.push({ cat:'ai', name:'AI Tool '+i, desc:'أداة ذكاء اصطناعي إضافية.', link:'#' }); }
 
     function openSection(s) {
         document.getElementById('homeUI').style.display = 'none';
